@@ -151,4 +151,258 @@ body{
     margin-left: 5px;
 }
 
+.main-menu{
+    background-color: var(--gray);
+    height: 50px;
+}
+
+.main-menu ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.main-menu .container{
+    display: flex;
+    align-items: stretch;
+    height: 100%;
+}
+
+.main-menu a{
+    color: var(--text);
+    text-decoration: none;
+}
+
+.list-cat__main{
+     background-color: var(--accent);
+    height: 100%;
+    padding-left: 25px;
+    padding-right: 100px;
+    position: relative;
+}
+.list-cat__main_icon{
+    margin-right: 15px;
+}
+
+.main-menu__list{
+    display: flex;
+    align-content: stretch;
+    height: 100%;
+    align-items: center
+}
+.main-menu__item{
+    border-right: 1px solid #E2E2E2;
+    padding: 0 30px;
+    font-size: 14px;
+}
+
+.list-cat{
+    position: relative;
+}
+
+.list-cat_drop{
+    position: absolute;
+    background-color: #fff;
+    width: 100%;
+    z-index: 2;
+}
+
+.list-cat__list_link{
+    display: block;
+    padding: 10px 25px;
+    border-bottom: 1px solid #E2E2E2;
+    font-size: 14px;
+    opacity: .8;
+}
+.header{
+    position: relative;
+}
+
+.header-carousel__slide{
+    height: 500px;
+    background-size: cover;
+}
+.header-carousel__slide .container{
+    padding-left: 350px;
+    padding-top: 70px;
+}
+
+.header-carousel__title{
+    font-size: 40px;
+    font-weight: 400;
+    line-height: 1;
+    margin-bottom: 10px;
+}
+
+.header-carousel__desc .bold{
+    font-weight: 600;
+}
+.header-carousel__desc{
+    width: 35%;
+}
+
+.bnt-border{
+    font-size: 14px;
+    color: var(--accent);
+    border: 2px solid var(--accent);
+    padding: 15px 30px;
+    text-decoration: none;
+    display: inline-block;
+    font-weight: 600;
+    margin-top: 20px;
+}
+
+.header-carousel-pagination{
+    padding-left: 350px;
+
+}
+.header-carousel-pagination-wrap{
+    position: absolute;
+    bottom: 700px;
+    left: 0;
+    width: 100%;
+    z-index: 2;
+}
+
+.categories{
+    margin: 80px 0;
+}
+.categories__title{
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+.categories__desc{
+    color: var(--gray-sd);
+}
+
+.categories__item_icon{
+    margin-bottom: 15px;
+}
+.categories__item_title{
+    margin-bottom: 15px;
+}
+.categories__item_count{
+    color: var(--gray-d);
+}
+
+.adv{
+    background-color: var(--gray-l);
+}
+
+.adv .container{
+    display: flex;
+    align-items: stretch;
+    height: 100%;
+}
+
+.adv__item{
+    border-right: 2px solid var(--gray);
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 30px;
+    font-size: 14px;
+}
+.adv__item_icon{
+    margin: 20px;
+}
+.adv__item_icon img{
+    max-width: 50px;
+}
+
+.sale{
+    padding: 80px 0;
+}
+
+.mini-product{
+    border: 2px solid var(--gray);
+    position: relative;
+    padding-bottom: 15px;
+    max-width: 350px;
+    border-right: none;
+}
+.mini-product__compare{
+    margin-right: 15px;
+}
+.mini-product__buy{
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: var(--accent);
+}
+.mini-product__top{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+}
+.mini-product__action{
+    display: flex;
+    align-items: center;
+}
+.mini-product__stock{
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.mini-product__img{
+    margin: 30px 0;
+    text-align: center;
+    display: flex;
+    justify-content: space-around;
+}
+
+.mini-product__img img{
+    display: block;
+    max-width: 300px;
+}
+
+.mini-product__title{
+    padding: 0 15px;
+    display: block;
+    color: var(--text);
+    text-decoration: none;
+}
+
+.mini-product__rating{
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    margin-top: 10px;
+}
+
+.mini-product__price{
+    display: flex;
+    padding: 0 15px;
+    margin-top: 20px;
+}
+
+.mini-product__price_old{
+    display: block;
+    text-decoration: line-through;
+    font-size: 12px;
+    color: var(--gray-d);
+}
+.mini-product__price_current{
+    display: block;
+    font-weight: 600;
+    font-size: 16px;
+}
+.mini-product__price_sale{
+    margin-left: 15px;
+}
+.mini-product__price_sale-count{
+    background-color: #DF6E6E;
+    color: #FFF;
+    padding: 2px 4px;
+    font-size: 14px;
+}
+
+
 /*1.01.32*/
+/*1.33.06*/
