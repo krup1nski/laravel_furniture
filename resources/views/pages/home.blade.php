@@ -534,6 +534,38 @@
 @extends('layouts.main')
 
 @section('content')
+    <header class="header">
+        <div class="swiper header-carousel">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide header-carousel__slide" style="background-image: url('{{ asset('images/banner1.png') }}')">
+                    <div class="container">
+                        <h3 class="header-carousel__title">Бери больше -<br> плати меньше</h3>
+                        <div class="header-carousel__desc">
+                            <p>При покупке одного и более изделий скидка на последующие - 20 byn</p>
+                        </div>
+                        <a href="" class="bnt-border">Подробнее</a>
+                    </div>
+                </div>
+
+
+                <div class="swiper-slide header-carousel__slide" style="background-image: url('{{ asset('images/banner2.png') }}')">
+                    <div class="container">
+                        <h3 class="header-carousel__title">Кровать в <br>скандинавском<br> стиле со скидкой 50%</h3>
+                        <div class="header-carousel__desc">
+                            <p>До 1 августа</p>
+                        </div>
+                        <a href="" class="bnt-border">Подробнее</a>
+                    </div>
+                </div>
+
+            </div>
+            <div class="header-carousel-pagination-wrap">
+                <div class="container">
+                    <div class="header-carousel-pagination"></div>
+                </div>
+            </div>
+        </div>
+    </header>
     <section class="categories">
         <div class="container">
             <h2 class="categories__title">Более 30 000 позиций ждут вас</h2>

@@ -12,6 +12,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-ui-slider@1.12.1/jquery-ui.min.css">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
 </head>
@@ -115,38 +116,6 @@
     </div>
 </nav>
 
-<header class="header">
-    <div class="swiper header-carousel">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide header-carousel__slide" style="background-image: url('{{ asset('images/banner1.png') }}')">
-                <div class="container">
-                    <h3 class="header-carousel__title">Бери больше -<br> плати меньше</h3>
-                    <div class="header-carousel__desc">
-                        <p>При покупке одного и более изделий скидка на последующие - 20 byn</p>
-                    </div>
-                    <a href="" class="bnt-border">Подробнее</a>
-                </div>
-            </div>
-
-
-            <div class="swiper-slide header-carousel__slide" style="background-image: url('{{ asset('images/banner2.png') }}')">
-                <div class="container">
-                    <h3 class="header-carousel__title">Кровать в <br>скандинавском<br> стиле со скидкой 50%</h3>
-                    <div class="header-carousel__desc">
-                        <p>До 1 августа</p>
-                    </div>
-                    <a href="" class="bnt-border">Подробнее</a>
-                </div>
-            </div>
-
-        </div>
-        <div class="header-carousel-pagination-wrap">
-            <div class="container">
-                <div class="header-carousel-pagination"></div>
-            </div>
-        </div>
-    </div>
-</header>
 
 @yield('content')
 
@@ -163,7 +132,14 @@
 @include('partials.footer')
 
 
-@yield('scripts')
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    if(window.location.pathname != '/'){
+        $('.list-cat_drop').hide()
+    }
+</script>
+
+@yield('scripts')
 </body>
 </html>

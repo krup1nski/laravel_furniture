@@ -510,6 +510,53 @@ body{
 }
 
 
+
+
+/*----------------Category----------------*/
+
+.breadcrumbs{
+    margin-top: 20px;
+}
+.breadcrumbs__list{
+    display: flex;
+    align-items: center;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.breadcrumbs__item{
+    padding-left: 30px;
+    font-size: 14px;
+    position: relative;
+}
+
+.breadcrumbs__item::before{
+    content: '/';
+    position: absolute;
+    left: 20px;
+    top:50%;
+    transform: translateY(-50%);
+}
+.breadcrumbs__item:first-child{
+    padding-left: 0;
+}
+.breadcrumbs__item:first-child::before{
+    display: none;
+}
+.breadcrumbs__item a{
+    color: var(--text);
+}
+.breadcrumbs__item span{
+    color: var(--gray-d);
+}
+
+.page-title{
+    font-size: 32px;
+    font-weight: 600;
+}
+
 /*1.01.32*/
 /*1.33.06*/
 /*2.31.14*/
+/*2.38.14*/
+/*2.56.03*/
