@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-ui-slider@1.12.1/jquery-ui.min.css">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
+
+
 </head>
 <body>
 <div class="top-line">
@@ -133,13 +135,13 @@
 
 
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script>
     if(window.location.pathname != '/'){
         $('.list-cat_drop').hide()
     }
 </script>
 
-@yield('scripts')
+@yield('script')
 </body>
 </html>

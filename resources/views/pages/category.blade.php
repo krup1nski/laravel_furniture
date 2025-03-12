@@ -11,7 +11,7 @@
                         Главная</a>
                 </li>
                 <li class="breadcrumbs__item">
-                    <span  class="breadcrumbs__el">Комоды</span>
+                    <span class="breadcrumbs__el">Комоды</span>
                 </li>
             </ul>
         </div>
@@ -27,7 +27,7 @@
             <a href="" class="ms-tags__item">Модульные</a>
             <a href="" class="ms-tags__item">C зеркалом</a>
             <a href="" class="ms-tags__item">Лсд</a>
-            </div>
+        </div>
     </div>
 
 
@@ -41,38 +41,67 @@
                     </div>
                 </div>
                 <div class="pc-filter-price">
-                    <div class="pc-filter-price_inputs">
-                        <input type="text" id="filter-price-slider-from" class="pc-filter-price__input" name="price_from" placeholder="от 100">
-                        <input type="text" id="filter-price-slider-to" class="pc-filter-price__input" name="price_to" placeholder="до 3500">
+                    <div class="pc-filter-price__inputs">
+                        <input type="text" id="filter-price-slider-from" class="pc-filter-price__input"
+                               name="price_from" placeholder="от 100">
+                        <input type="text" id="filter-price-slider-to" class="pc-filter-price__input" name="price_to"
+                               placeholder="до 3500">
                     </div>
                     <div id="filter-price-slider" class="pc-filter-price__slider"></div>
-                    <div class="pc-filter__item">
-                        <div class="pc-filter__item_top">
-                            <span class="pc-filter__item_title">Конструкция</span>
-                            <span class="pc-filter__item_icon">
+                </div>
+                <div class="pc-filter__item">
+                    <div class="pc-filter__item_top">
+                        <span class="pc-filter__item_title">Конструкция</span>
+                        <div class="pc-filter__item_icon">
                                 <i class="fa-solid fa-angle-up"></i>
-                            </span>
-                        </div>
-                        <div class="pc-filter__item_cont">
-                            <label class="pc-filter-checkbox">
-                                <input type="checkbox" name="dsa" class="pc-filter-checkbox__checkbox">
-                                <span class="pc-filter-checkbox__box"></span>
-                                <span class="pc-filter-checkbox__value">С ящиком</span>
-                            </label>
-                            <label class="pc-filter-checkbox">
-                                <input type="checkbox" name="dsa" class="pc-filter-checkbox__checkbox">
-                                <span class="pc-filter-checkbox__box"></span>
-                                <span class="pc-filter-checkbox__value">С зеркалом</span>
-                            </label>
-                            <label class="pc-filter-checkbox">
-                                <input type="checkbox" name="dsa" class="pc-filter-checkbox__checkbox">
-                                <span class="pc-filter-checkbox__box"></span>
-                                <span class="pc-filter-checkbox__value">Угловые</span>
-                            </label>
-
-                        </div>
+                            </div>
+                    </div>
+                    <div class="pc-filter__item_cont">
+                        <label class="pc-filter-checkbox">
+                            <input type="checkbox" name="dsa" class="pc-filter-checkbox__checkbox">
+                            <div class="pc-filter-checkbox__box"></div>
+                            <span class="pc-filter-checkbox__value">С ящиком</span>
+                        </label>
+                        <label class="pc-filter-checkbox">
+                            <input type="checkbox" name="dsa" class="pc-filter-checkbox__checkbox">
+                            <div class="pc-filter-checkbox__box"></div>
+                            <span class="pc-filter-checkbox__value">С зеркалом</span>
+                        </label>
+                        <label class="pc-filter-checkbox">
+                            <input type="checkbox" name="dsa" class="pc-filter-checkbox__checkbox">
+                            <div class="pc-filter-checkbox__box"></div>
+                            <span class="pc-filter-checkbox__value">Угловые</span>
+                        </label>
                     </div>
                 </div>
+
+
+                <div class="pc-filter__item">
+                    <div class="pc-filter__item_top">
+                        <span class="pc-filter__item_title">Цвет</span>
+                        <div class="pc-filter__item_icon">
+                            <i class="fa-solid fa-angle-up"></i>
+                        </div>
+                    </div>
+                    <div class="pc-filter__item_cont">
+                        <label class="pc-filter-checkbox">
+                            <input type="checkbox" name="dsa" class="pc-filter-checkbox__checkbox">
+                            <div class="pc-filter-checkbox__box"></div>
+                            <span class="pc-filter-checkbox__value">Белые</span>
+                        </label>
+                        <label class="pc-filter-checkbox">
+                            <input type="checkbox" name="dsa" class="pc-filter-checkbox__checkbox">
+                            <div class="pc-filter-checkbox__box"></div>
+                            <span class="pc-filter-checkbox__value">Глянец</span>
+                        </label>
+                        <label class="pc-filter-checkbox">
+                            <input type="checkbox" name="dsa" class="pc-filter-checkbox__checkbox">
+                            <div class="pc-filter-checkbox__box"></div>
+                            <span class="pc-filter-checkbox__value">Черные</span>
+                        </label>
+                    </div>
+                </div>
+
             </div>
 
             <div class="page-category__content">
@@ -122,27 +151,247 @@
                         </div>
 
                     </div>
+                    <div class="mini-product">
+                        <div class="mini-product__top">
+                            <div class="mini-product__stock">4 шт.</div>
+                            <div class="mini-product__action">
+                                <div class="mini-product__compare">
+                                    <i class="fa-solid fa-equals"></i>
+                                </div>
+                                <div class="mini-product__like">
+                                    <i class="fa-solid fa-heart"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mini-product__img">
+                            <img src="{{ asset('images/komod.jpg') }}" alt="">
+                        </div>
+                        <a href="" class="mini-product__title">Комод 2</a>
+                        <div class="mini-product__rating">
+                            <div class="mini-product__rating_icon">
+                                <i class="fa-solid fa-star"></i>
+                            </div>
+                            <span class="mini-product__rating_text">4.7</span>
+                        </div>
+                        <div class="mini-product__price">
+                            <div class="mini-product__price_main">
+                                <span class="mini-product__price_old">459 BYN</span>
+                                <span class="mini-product__price_current">379 BYN</span>
+                            </div>
+                            <div class="mini-product__price_sale">
+                                <div class="mini-product__price_sale-count">-10%</div>
+                            </div>
+                        </div>
+                        <div class="mini-product__buy">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </div>
+
+                    </div>
+                    <div class="mini-product">
+                        <div class="mini-product__top">
+                            <div class="mini-product__stock">4 шт.</div>
+                            <div class="mini-product__action">
+                                <div class="mini-product__compare">
+                                    <i class="fa-solid fa-equals"></i>
+                                </div>
+                                <div class="mini-product__like">
+                                    <i class="fa-solid fa-heart"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mini-product__img">
+                            <img src="{{ asset('images/komod.jpg') }}" alt="">
+                        </div>
+                        <a href="" class="mini-product__title">Комод 2</a>
+                        <div class="mini-product__rating">
+                            <div class="mini-product__rating_icon">
+                                <i class="fa-solid fa-star"></i>
+                            </div>
+                            <span class="mini-product__rating_text">4.7</span>
+                        </div>
+                        <div class="mini-product__price">
+                            <div class="mini-product__price_main">
+                                <span class="mini-product__price_old">459 BYN</span>
+                                <span class="mini-product__price_current">379 BYN</span>
+                            </div>
+                            <div class="mini-product__price_sale">
+                                <div class="mini-product__price_sale-count">-10%</div>
+                            </div>
+                        </div>
+                        <div class="mini-product__buy">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </div>
+
+                    </div>
+                    <div class="mini-product">
+                        <div class="mini-product__top">
+                            <div class="mini-product__stock">4 шт.</div>
+                            <div class="mini-product__action">
+                                <div class="mini-product__compare">
+                                    <i class="fa-solid fa-equals"></i>
+                                </div>
+                                <div class="mini-product__like">
+                                    <i class="fa-solid fa-heart"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mini-product__img">
+                            <img src="{{ asset('images/komod.jpg') }}" alt="">
+                        </div>
+                        <a href="" class="mini-product__title">Комод 2</a>
+                        <div class="mini-product__rating">
+                            <div class="mini-product__rating_icon">
+                                <i class="fa-solid fa-star"></i>
+                            </div>
+                            <span class="mini-product__rating_text">4.7</span>
+                        </div>
+                        <div class="mini-product__price">
+                            <div class="mini-product__price_main">
+                                <span class="mini-product__price_old">459 BYN</span>
+                                <span class="mini-product__price_current">379 BYN</span>
+                            </div>
+                            <div class="mini-product__price_sale">
+                                <div class="mini-product__price_sale-count">-10%</div>
+                            </div>
+                        </div>
+                        <div class="mini-product__buy">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </div>
+
+                    </div>
+                    <div class="mini-product">
+                        <div class="mini-product__top">
+                            <div class="mini-product__stock">4 шт.</div>
+                            <div class="mini-product__action">
+                                <div class="mini-product__compare">
+                                    <i class="fa-solid fa-equals"></i>
+                                </div>
+                                <div class="mini-product__like">
+                                    <i class="fa-solid fa-heart"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mini-product__img">
+                            <img src="{{ asset('images/komod.jpg') }}" alt="">
+                        </div>
+                        <a href="" class="mini-product__title">Комод 2</a>
+                        <div class="mini-product__rating">
+                            <div class="mini-product__rating_icon">
+                                <i class="fa-solid fa-star"></i>
+                            </div>
+                            <span class="mini-product__rating_text">4.7</span>
+                        </div>
+                        <div class="mini-product__price">
+                            <div class="mini-product__price_main">
+                                <span class="mini-product__price_old">459 BYN</span>
+                                <span class="mini-product__price_current">379 BYN</span>
+                            </div>
+                            <div class="mini-product__price_sale">
+                                <div class="mini-product__price_sale-count">-10%</div>
+                            </div>
+                        </div>
+                        <div class="mini-product__buy">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </div>
+
+                    </div>
+                    <div class="mini-product">
+                        <div class="mini-product__top">
+                            <div class="mini-product__stock">4 шт.</div>
+                            <div class="mini-product__action">
+                                <div class="mini-product__compare">
+                                    <i class="fa-solid fa-equals"></i>
+                                </div>
+                                <div class="mini-product__like">
+                                    <i class="fa-solid fa-heart"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mini-product__img">
+                            <img src="{{ asset('images/komod.jpg') }}" alt="">
+                        </div>
+                        <a href="" class="mini-product__title">Комод 2</a>
+                        <div class="mini-product__rating">
+                            <div class="mini-product__rating_icon">
+                                <i class="fa-solid fa-star"></i>
+                            </div>
+                            <span class="mini-product__rating_text">4.7</span>
+                        </div>
+                        <div class="mini-product__price">
+                            <div class="mini-product__price_main">
+                                <span class="mini-product__price_old">459 BYN</span>
+                                <span class="mini-product__price_current">379 BYN</span>
+                            </div>
+                            <div class="mini-product__price_sale">
+                                <div class="mini-product__price_sale-count">-10%</div>
+                            </div>
+                        </div>
+                        <div class="mini-product__buy">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </div>
+
+                    </div>
+                    <div class="mini-product">
+                        <div class="mini-product__top">
+                            <div class="mini-product__stock">4 шт.</div>
+                            <div class="mini-product__action">
+                                <div class="mini-product__compare">
+                                    <i class="fa-solid fa-equals"></i>
+                                </div>
+                                <div class="mini-product__like">
+                                    <i class="fa-solid fa-heart"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mini-product__img">
+                            <img src="{{ asset('images/komod.jpg') }}" alt="">
+                        </div>
+                        <a href="" class="mini-product__title">Комод 2</a>
+                        <div class="mini-product__rating">
+                            <div class="mini-product__rating_icon">
+                                <i class="fa-solid fa-star"></i>
+                            </div>
+                            <span class="mini-product__rating_text">4.7</span>
+                        </div>
+                        <div class="mini-product__price">
+                            <div class="mini-product__price_main">
+                                <span class="mini-product__price_old">459 BYN</span>
+                                <span class="mini-product__price_current">379 BYN</span>
+                            </div>
+                            <div class="mini-product__price_sale">
+                                <div class="mini-product__price_sale-count">-10%</div>
+                            </div>
+                        </div>
+                        <div class="mini-product__buy">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
+
+
+
 @endsection
 
 @section('script')
-    <script src="http://cdn.jsdelivr.net/npm/jquery-ui-slider@1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-ui-slider@1.12.1/jquery-ui.min.js"></script>
+
     <script>
         $(document).ready(function (){
-            $('#filter-price-slider').slider({
+            $("#filter-price-slider").slider({
                 range: true,
                 min: 0,
                 max: 9999,
-                values: ['1000', '9000'],
-                slide: function(event, ui){
-                    $('#filter-price-slider-from').val(ui.values[0]);
-                    $('#filter-price-slider-to').val(ui.values[1]);
+                values: [1000, 9000], // Числа, а не строки!
+                slide: function (event, ui) {
+                    $("#filter-price-slider-from").val(ui.values[0]);
+                    $("#filter-price-slider-to").val(ui.values[1]);
                 }
-            });
+            })
         })
     </script>
 @endsection
