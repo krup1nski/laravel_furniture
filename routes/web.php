@@ -8,4 +8,8 @@ Route::get('/', function () {
 Route::get('/category', function () {
     return view('pages/category');
 });
+Route::get('/product', function () {
+    return view('pages/product');
+});
+
 
