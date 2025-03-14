@@ -929,6 +929,214 @@ body{
 }
 
 
+/*----------------Product----------------*/
+.page-cart{
+    margin-bottom: 80px;
+}
+.page-cart .container{
+    display: flex;
+    align-items: flex-start;
+}
+.page-cart-main{
+    border: 2px solid var(--gray);
+    width: 75%;
+}
+.pcart-main-order{
+    width: 25%;
+    background-color: var(--gray-l);
+    border: 2px solid var(--gray);
+    padding: 35px 30px;
+}
+.page-cart-product-list{
+    border-bottom: 1px solid var(--gray);
+    padding: 35px 30px;
+
+}
+.page-cart-product-list-item__info_wrap{
+    display: flex;
+    align-items: center;
+}
+
+.page-cart-product-list-item{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+.page-cart-product-list-item:last-child{
+    margin-bottom:0;
+}
+
+.page-cart-product-list-item__img{
+    width: 120px;
+    height: 70px;
+    border: 2px solid var(--gray);
+    overflow: hidden;
+    margin-right: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+.page-cart-product-list-item__img img{
+    width: 120px;
+    height: 70px;
+
+}
+.page-cart-product-list-item__title{
+    color: var(--text);
+    text-decoration: none;
+}
+.page-cart-product-list-item_options{
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    color: var(--gray-d);
+    font-size: 14px;
+}
+.page-cart-product-list-item_options span{
+    margin-left: 30px;
+    position: relative;
+}
+.page-cart-product-list-item_options span:before{
+    content: '/';
+    position: absolute;
+    top: 7px;
+    left: -15px;
+    transform: translateY(-50%);
+}
+.page-cart-product-list-item_options span:first-child{
+    margin-left: 0;
+}
+.page-cart-product-list-item_options span:first-child::before{
+    display: none;
+}
+
+
+.page-cart-product-list-item__count{
+    position: relative;
+    margin-right: 15px;
+}
+.page-cart-product-list-item__count input{
+    width: 80px;
+    height: 30px;
+    border: 1px solid var(--gray);
+    text-align: center;
+}
+.page-cart-product-list-item__count_plus{
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gray-d);
+}
+.page-cart-product-list-item__count_minus{
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gray-d);
+}
+.page-cart-product-list-item__price{
+    font-size: 18px;
+    font-weight: 600;
+}
+.page-cart-product-list-item__remove{
+    background-color: var(--gray);
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: var(--gray-sd);
+}
+.pcart-main-contact{
+    padding: 35px 30px;
+    border-bottom: 1px solid var(--gray);
+}
+.pcart-main-contact__title{
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 35px;
+    display: block;
+}
+.pcart-main-contact__input-wrap{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2%;
+}
+
+.pcart-main-contact input{
+    height: 50px;
+    padding: 0 15px;
+    border: 1px solid var(--gray);
+    width: 49%;
+}
+.pcart-main-delivery{
+    padding: 35px 30px;
+    border: 1px solid var(--gray);
+}
+.pcart-main-delivery__title{
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 35px;
+    display: block;
+}
+.pcart-main-delivery__items{
+    display: flex;
+    align-items: center;
+}
+.pcart-main-delivery__item{
+    border: 1px solid var(--gray);
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    width: 40%;
+    height: 90px;
+    margin-right: 15px;
+    cursor: pointer;
+}
+.pcart-main-delivery__item input{
+    display: none;
+}
+.pcart-main-delivery__item input:checked ~ .pcart-main-delivery__item_box{
+    border: 6px solid var(--accent);
+}
+.pcart-main-delivery__item_title{
+    font-weight: 600;
+    display: block;
+}
+.pcart-main-delivery__item_desc{
+    font-size: 14px;
+}
+.pcart-main-comment{
+    padding: 35px 30px;
+}
+.pcart-main-comment__title{
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 35px;
+    display: block;
+}
+.pcart-main-delivery__item_box{
+    width: 30px;
+    height: 30px;
+    background-color: var(--gray);
+    border-radius: 50%;
+    display: block;
+    min-width: 30px;
+    margin-right: 20px;
+}
+.pcart-main-comment__textarea{
+    width: 100%;
+    border: 1px solid var(--gray);
+    padding: 15px;
+    height: 150px;
+}
+
+
 /*1.01.32*/
 /*1.33.06*/
 /*2.31.14*/
@@ -936,3 +1144,5 @@ body{
 /*2.56.03*/
 /*3.18.57*/
 /*4.00.30*/
+/*4.22.27*/
+/*4.39.50*/
