@@ -115,8 +115,10 @@
                         <div class="pcart-main-order__info-item_title">К оплате:</div>
                         <div class="pcart-main-order__info-item_val result">400 byn</div>
                     </div>
+                    <div class="pcart-main-order__buy-wrap">
+                        <button class="pcart-main-order__buy">Оформить заказ</button>
+                    </div>
                 </div>
-                <button class="pcart-main-order__buy">Оформить заказ</button>
             </div>
         </div>
     </div>
