@@ -16,8 +16,9 @@ return new class extends Migration
             $table->string('title');
             $table->string('icon')->nullable();
             $table->unsignedBigInteger('top')->nullable();
+            $table->string('hash')->unique();
             $table->integer('sort')->default(1);
-            $table->float('status')->default(1);
+            $table->boolean('status')->default(1);
             $table->timestamps();
         });
     }

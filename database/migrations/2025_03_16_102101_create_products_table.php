@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->unsignedBigInteger('categories_id');
-            $table->float('price');
+            $table->integer('price');
             $table->integer('quantity')->nullable();
             $table->integer('sale')->nullable();
-            $table->float('status')->default(1);
+            $table->boolean('status')->default(1);
             $table->text('description')->nullable();
             $table->string('hash')->unique();
             $table->string('article')->unique();

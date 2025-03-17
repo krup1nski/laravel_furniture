@@ -277,9 +277,24 @@ body{
 .categories__desc{
     color: var(--gray-sd);
 }
+.categories__items{
+    display: grid;
+    margin-top: 40px;
+    grid-template-columns: repeat(4, 1fr);
+}
+/*.categories__item{*/
+/*    height: 165px;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    flex-direction: column;*/
+/*}*/
 
 .categories__item_icon{
     margin-bottom: 15px;
+}
+.categories__item_icon img{
+    max-width: 100px;
 }
 .categories__item_title{
     margin-bottom: 15px;
@@ -287,6 +302,7 @@ body{
 .categories__item_count{
     color: var(--gray-d);
 }
+
 
 .adv{
     background-color: var(--gray-l);

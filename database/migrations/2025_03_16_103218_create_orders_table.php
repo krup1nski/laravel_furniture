@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('email');
             $table->text('comment')->nullable();
             $table->string('status')->default('created');
-            $table->float('price');
+            $table->integer('price');
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
 

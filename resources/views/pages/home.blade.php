@@ -571,11 +571,17 @@
             <h2 class="categories__title">Более 30 000 позиций ждут вас</h2>
             <span class="categories__desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span>
             <div class="categories__items">
-                <div class="categories__item_icon">
-
-                </div>
-                <h4 class="categories__item_title">Комоды и тумбы</h4>
-                <div class="categories__item_count">60</div>
+                @foreach($categories as $category)
+                    <div class="categories__item">
+                        <div class="categories__item_icon">
+                            <img src="{{ asset('images/cat_svg/table.svg') }}" alt="">
+                        </div>
+                        <h4 class="categories__item_title">
+                            <a href="{{route('category',$category->hash)}}">{{$category->title}}</a>
+                        </h4>
+                        <div class="categories__item_count">60</div>
+                    </div>
+                @endforeach
             </div>
         </div>
     </section>
