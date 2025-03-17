@@ -75,7 +75,9 @@
                 <div class="ml-action_cart_icon">
                     <i class="fa-solid fa-cart-shopping"></i>
                 </div>
-                <div class="ml-action__cart_text">Корзина</div>
+                <div class="ml-action__cart_text">
+                    <a href="{{ route('cart') }}">Корзина</a>
+                </div>
             </div>
 
         </div>
@@ -93,6 +95,7 @@
             </div>
             <div class="list-cat_drop">
                 <ul class="list-cat__list">
+
                     <li class="list-cat__list_item"><a href="" class="list-cat__list_link">Комоды и тумбы</a></li>
                     <li class="list-cat__list_item"><a href="" class="list-cat__list_link">Мебель для детской</a></li>
                     <li class="list-cat__list_item"><a href="" class="list-cat__list_link">Мебель для кухни</a></li>

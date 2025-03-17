@@ -6,24 +6,24 @@
         <div class="container">
             <ul class="breadcrumbs__list">
                 <li class="breadcrumbs__item">
-                    <a href="" class="breadcrumbs__el">
+                    <a href="{{ route('home') }}" class="breadcrumbs__el">
                         <i class="fa-solid fa-house"></i>
                         Главная</a>
                 </li>
                 <li class="breadcrumbs__item">
                     <a href="" class="breadcrumbs__el">
-                        Категория
+                        {{ $category->title }}
                     </a>
                 </li>
                 <li class="breadcrumbs__item">
-                    <span class="breadcrumbs__el">Cтенка для гостинной m416</span>
+                    <span class="breadcrumbs__el">{{ $product->title }}</span>
                 </li>
             </ul>
         </div>
     </div>
 
     <div class="container">
-        <h1 class="page-title">Cтенка для гостинной m416</h1>
+        <h1 class="page-title">{{ $product->title }}</h1>
     </div>
 
 

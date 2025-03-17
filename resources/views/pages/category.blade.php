@@ -11,13 +11,13 @@
                         Главная</a>
                 </li>
                 <li class="breadcrumbs__item">
-                    <span class="breadcrumbs__el">Комоды</span>
+                    <span class="breadcrumbs__el">{{ $data['category']->title }}</span>
                 </li>
             </ul>
         </div>
     </div>
     <div class="container">
-        <h1 class="page-title">Комоды и тумбы</h1>
+        <h1 class="page-title">{{ $data['category']->title }}</h1>
     </div>
 
     <div class="ms-tags">
@@ -115,258 +115,48 @@
                     </div>
                 </div>
                 <div class="page-category__products">
-                    <div class="mini-product">
-                        <div class="mini-product__top">
-                            <div class="mini-product__stock">4 шт.</div>
-                            <div class="mini-product__action">
-                                <div class="mini-product__compare">
-                                    <i class="fa-solid fa-equals"></i>
-                                </div>
-                                <div class="mini-product__like">
-                                    <i class="fa-solid fa-heart"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mini-product__img">
-                            <img src="{{ asset('images/komod.jpg') }}" alt="">
-                        </div>
-                        <a href="" class="mini-product__title">Комод 2</a>
-                        <div class="mini-product__rating">
-                            <div class="mini-product__rating_icon">
-                                <i class="fa-solid fa-star"></i>
-                            </div>
-                            <span class="mini-product__rating_text">4.7</span>
-                        </div>
-                        <div class="mini-product__price">
-                            <div class="mini-product__price_main">
-                                <span class="mini-product__price_old">459 BYN</span>
-                                <span class="mini-product__price_current">379 BYN</span>
-                            </div>
-                            <div class="mini-product__price_sale">
-                                <div class="mini-product__price_sale-count">-10%</div>
-                            </div>
-                        </div>
-                        <div class="mini-product__buy">
-                            <i class="fa-solid fa-cart-shopping"></i>
-                        </div>
 
-                    </div>
-                    <div class="mini-product">
-                        <div class="mini-product__top">
-                            <div class="mini-product__stock">4 шт.</div>
-                            <div class="mini-product__action">
-                                <div class="mini-product__compare">
-                                    <i class="fa-solid fa-equals"></i>
+                    @foreach($data['products'] as $product)
+                        <div class="mini-product">
+                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                            <div class="mini-product__top">
+                                <div class="mini-product__stock">{{ $product->quantity }} шт.</div>
+                                <div class="mini-product__action">
+                                    <div class="mini-product__compare">
+                                        <i class="fa-solid fa-equals"></i>
+                                    </div>
+                                    <div class="mini-product__like">
+                                        <i class="fa-solid fa-heart"></i>
+                                    </div>
                                 </div>
-                                <div class="mini-product__like">
-                                    <i class="fa-solid fa-heart"></i>
+                            </div>
+                            <div class="mini-product__img">
+{{--                                <img src="{{ asset('images/komod.jpg') }}" alt="">--}}
+                                <img src="{{ $product->image_path }}" alt="">
+                            </div>
+                            <a href="{{ route('product', $product->hash) }}" class="mini-product__title">{{ $product->title }}</a>
+                            <div class="mini-product__rating">
+                                <div class="mini-product__rating_icon">
+                                    <i class="fa-solid fa-star"></i>
+                                </div>
+                                <span class="mini-product__rating_text">4.7</span>
+                            </div>
+                            <div class="mini-product__price">
+                                <div class="mini-product__price_main">
+                                    <span class="mini-product__price_old">459 BYN</span>
+                                    <span class="mini-product__price_current">379 BYN</span>
+                                </div>
+                                <div class="mini-product__price_sale">
+                                    <div class="mini-product__price_sale-count">-10%</div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="mini-product__img">
-                            <img src="{{ asset('images/komod.jpg') }}" alt="">
-                        </div>
-                        <a href="" class="mini-product__title">Комод 2</a>
-                        <div class="mini-product__rating">
-                            <div class="mini-product__rating_icon">
-                                <i class="fa-solid fa-star"></i>
+                            <div class="mini-product__buy">
+                                <i class="fa-solid fa-cart-shopping"></i>
                             </div>
-                            <span class="mini-product__rating_text">4.7</span>
-                        </div>
-                        <div class="mini-product__price">
-                            <div class="mini-product__price_main">
-                                <span class="mini-product__price_old">459 BYN</span>
-                                <span class="mini-product__price_current">379 BYN</span>
-                            </div>
-                            <div class="mini-product__price_sale">
-                                <div class="mini-product__price_sale-count">-10%</div>
-                            </div>
-                        </div>
-                        <div class="mini-product__buy">
-                            <i class="fa-solid fa-cart-shopping"></i>
-                        </div>
 
-                    </div>
-                    <div class="mini-product">
-                        <div class="mini-product__top">
-                            <div class="mini-product__stock">4 шт.</div>
-                            <div class="mini-product__action">
-                                <div class="mini-product__compare">
-                                    <i class="fa-solid fa-equals"></i>
-                                </div>
-                                <div class="mini-product__like">
-                                    <i class="fa-solid fa-heart"></i>
-                                </div>
-                            </div>
                         </div>
-                        <div class="mini-product__img">
-                            <img src="{{ asset('images/komod.jpg') }}" alt="">
-                        </div>
-                        <a href="" class="mini-product__title">Комод 2</a>
-                        <div class="mini-product__rating">
-                            <div class="mini-product__rating_icon">
-                                <i class="fa-solid fa-star"></i>
-                            </div>
-                            <span class="mini-product__rating_text">4.7</span>
-                        </div>
-                        <div class="mini-product__price">
-                            <div class="mini-product__price_main">
-                                <span class="mini-product__price_old">459 BYN</span>
-                                <span class="mini-product__price_current">379 BYN</span>
-                            </div>
-                            <div class="mini-product__price_sale">
-                                <div class="mini-product__price_sale-count">-10%</div>
-                            </div>
-                        </div>
-                        <div class="mini-product__buy">
-                            <i class="fa-solid fa-cart-shopping"></i>
-                        </div>
+                    @endforeach
 
-                    </div>
-                    <div class="mini-product">
-                        <div class="mini-product__top">
-                            <div class="mini-product__stock">4 шт.</div>
-                            <div class="mini-product__action">
-                                <div class="mini-product__compare">
-                                    <i class="fa-solid fa-equals"></i>
-                                </div>
-                                <div class="mini-product__like">
-                                    <i class="fa-solid fa-heart"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mini-product__img">
-                            <img src="{{ asset('images/komod.jpg') }}" alt="">
-                        </div>
-                        <a href="" class="mini-product__title">Комод 2</a>
-                        <div class="mini-product__rating">
-                            <div class="mini-product__rating_icon">
-                                <i class="fa-solid fa-star"></i>
-                            </div>
-                            <span class="mini-product__rating_text">4.7</span>
-                        </div>
-                        <div class="mini-product__price">
-                            <div class="mini-product__price_main">
-                                <span class="mini-product__price_old">459 BYN</span>
-                                <span class="mini-product__price_current">379 BYN</span>
-                            </div>
-                            <div class="mini-product__price_sale">
-                                <div class="mini-product__price_sale-count">-10%</div>
-                            </div>
-                        </div>
-                        <div class="mini-product__buy">
-                            <i class="fa-solid fa-cart-shopping"></i>
-                        </div>
-
-                    </div>
-                    <div class="mini-product">
-                        <div class="mini-product__top">
-                            <div class="mini-product__stock">4 шт.</div>
-                            <div class="mini-product__action">
-                                <div class="mini-product__compare">
-                                    <i class="fa-solid fa-equals"></i>
-                                </div>
-                                <div class="mini-product__like">
-                                    <i class="fa-solid fa-heart"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mini-product__img">
-                            <img src="{{ asset('images/komod.jpg') }}" alt="">
-                        </div>
-                        <a href="" class="mini-product__title">Комод 2</a>
-                        <div class="mini-product__rating">
-                            <div class="mini-product__rating_icon">
-                                <i class="fa-solid fa-star"></i>
-                            </div>
-                            <span class="mini-product__rating_text">4.7</span>
-                        </div>
-                        <div class="mini-product__price">
-                            <div class="mini-product__price_main">
-                                <span class="mini-product__price_old">459 BYN</span>
-                                <span class="mini-product__price_current">379 BYN</span>
-                            </div>
-                            <div class="mini-product__price_sale">
-                                <div class="mini-product__price_sale-count">-10%</div>
-                            </div>
-                        </div>
-                        <div class="mini-product__buy">
-                            <i class="fa-solid fa-cart-shopping"></i>
-                        </div>
-
-                    </div>
-                    <div class="mini-product">
-                        <div class="mini-product__top">
-                            <div class="mini-product__stock">4 шт.</div>
-                            <div class="mini-product__action">
-                                <div class="mini-product__compare">
-                                    <i class="fa-solid fa-equals"></i>
-                                </div>
-                                <div class="mini-product__like">
-                                    <i class="fa-solid fa-heart"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mini-product__img">
-                            <img src="{{ asset('images/komod.jpg') }}" alt="">
-                        </div>
-                        <a href="" class="mini-product__title">Комод 2</a>
-                        <div class="mini-product__rating">
-                            <div class="mini-product__rating_icon">
-                                <i class="fa-solid fa-star"></i>
-                            </div>
-                            <span class="mini-product__rating_text">4.7</span>
-                        </div>
-                        <div class="mini-product__price">
-                            <div class="mini-product__price_main">
-                                <span class="mini-product__price_old">459 BYN</span>
-                                <span class="mini-product__price_current">379 BYN</span>
-                            </div>
-                            <div class="mini-product__price_sale">
-                                <div class="mini-product__price_sale-count">-10%</div>
-                            </div>
-                        </div>
-                        <div class="mini-product__buy">
-                            <i class="fa-solid fa-cart-shopping"></i>
-                        </div>
-
-                    </div>
-                    <div class="mini-product">
-                        <div class="mini-product__top">
-                            <div class="mini-product__stock">4 шт.</div>
-                            <div class="mini-product__action">
-                                <div class="mini-product__compare">
-                                    <i class="fa-solid fa-equals"></i>
-                                </div>
-                                <div class="mini-product__like">
-                                    <i class="fa-solid fa-heart"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mini-product__img">
-                            <img src="{{ asset('images/komod.jpg') }}" alt="">
-                        </div>
-                        <a href="" class="mini-product__title">Комод 2</a>
-                        <div class="mini-product__rating">
-                            <div class="mini-product__rating_icon">
-                                <i class="fa-solid fa-star"></i>
-                            </div>
-                            <span class="mini-product__rating_text">4.7</span>
-                        </div>
-                        <div class="mini-product__price">
-                            <div class="mini-product__price_main">
-                                <span class="mini-product__price_old">459 BYN</span>
-                                <span class="mini-product__price_current">379 BYN</span>
-                            </div>
-                            <div class="mini-product__price_sale">
-                                <div class="mini-product__price_sale-count">-10%</div>
-                            </div>
-                        </div>
-                        <div class="mini-product__buy">
-                            <i class="fa-solid fa-cart-shopping"></i>
-                        </div>
-
-                    </div>
                 </div>
             </div>
         </div>
@@ -391,7 +181,39 @@
                     $("#filter-price-slider-from").val(ui.values[0]);
                     $("#filter-price-slider-to").val(ui.values[1]);
                 }
-            })
+            });
+
+            //добавление товара в локалсторэдж
+            $('.mini-product__buy').on('click', function () {
+
+                let id = $(this).parents('.mini-product').find('input[name="product_id"]').val();
+                let title = $(this).parents('.mini-product').find('.mini-product__title').text().trim();
+                let price = $(this).parents('.mini-product').find('.mini-product__price_current').text().trim().replace(' BYN', '');
+                let img_path = $(this).parents('.mini-product').find('.mini-product__img img').attr('src');
+
+                let product = {
+                    product_id: id,
+                    product_title: title,
+                    count: 1,
+                    product_price: price,
+                    product_img: img_path,
+                };
+
+                let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                let match = false;
+
+                cart.forEach(item => {
+                    if (item.product_id == product.product_id) {
+                        item.count += 1; // Увеличиваем количество, если товар уже есть в корзине
+                        match = true;
+                    }
+                });
+
+                if (!match) {
+                    cart.push(product); // Добавляем новый товар, если его еще нет
+                }
+                localStorage.setItem('cart', JSON.stringify(cart));
+            });
         })
     </script>
 @endsection
