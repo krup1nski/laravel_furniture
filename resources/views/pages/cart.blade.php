@@ -6,7 +6,7 @@
         <div class="container">
             <ul class="breadcrumbs__list">
                 <li class="breadcrumbs__item">
-                    <a href="" class="breadcrumbs__el">
+                    <a href="{{ route('home') }}" class="breadcrumbs__el">
                         <i class="fa-solid fa-house"></i>
                         Главная</a>
                 </li>
@@ -27,31 +27,9 @@
         <div class="container">
             <div class="page-cart-main">
                 <div class="page-cart-product-list">
-                    <div class="page-cart-product-list-item">
-                        <div class="page-cart-product-list-item__info_wrap">
-                            <div class="page-cart-product-list-item__img">
-                                <img src="{{ asset('images/komod.jpg') }}" alt="">
-                            </div>
-                            <div class="page-cart-product-list-item__info">
-                                <a href="" class="page-cart-product-list-item__title">Cтенка для гостинной x3D</a>
-                                <div class="page-cart-product-list-item_options">
-                                    <span class="">Красный</span>
-                                    <span class="">144х123х123</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="page-cart-product-list-item__count">
-                            <span class="page-cart-product-list-item__count_minus">-</span>
-                            <input type="text" name="count" value="1">
-                            <span class="page-cart-product-list-item__count_plus">+</span>
-                        </div>
-                        <div class="page-cart-product-list-item__price">
-                            100 byn
-                        </div>
-                        <div class="page-cart-product-list-item__remove">
-                            <i class="fa-solid fa-xmark"></i>
-                        </div>
-                    </div>
+
+{{--                    товары в корзине тут    --}}
+
                 </div>
                 <div class="pcart-main-contact">
                     <span class="pcart-main-contact__title">1.Контактная информация</span>
@@ -132,6 +110,87 @@
 
     <script>
         $(document).ready(function (){
+            let cart = JSON.parse(localStorage.getItem('cart'))
+            let output = ``
+            //отображение продуктов корзины из локалсторэдж
+            cart.forEach(item => {
+                output += `
+                <div class="page-cart-product-list-item">
+                    <input type="hidden" name="product_id" value="${item.product_id}" >
+                    <div class="page-cart-product-list-item__info_wrap">
+                        <div class="page-cart-product-list-item__img">
+                            <img src="${item.product_img}" alt="">
+                        </div>
+                        <div class="page-cart-product-list-item__info">
+                            <a href="" class="page-cart-product-list-item__title">${item.product_title}</a>
+                            <div class="page-cart-product-list-item_options">
+                                <span class="">Красный</span>
+                                <span class="">144х123х123</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="page-cart-product-list-item__count">
+                        <span class="page-cart-product-list-item__count_minus">-</span>
+                        <input type="text" name="count" value="${item.count}">
+                            <span class="page-cart-product-list-item__count_plus">+</span>
+                    </div>
+                    <div class="page-cart-product-list-item__price">
+                        ${item.product_price} byn
+                    </div>
+                    <div class="page-cart-product-list-item__remove">
+                        <i class="fa-solid fa-xmark"></i>
+                    </div>
+                </div>
+                `
+            })
+
+            $('.page-cart-product-list').html(output)
+
+
+            // удаление товара из корзины
+            $(document).on('click', '.page-cart-product-list-item__remove', function (){
+                let id = $(this).parents('.page-cart-product-list-item').find('input[name="product_id"]').val()
+                let cart = JSON.parse(localStorage.getItem('cart'))
+                $(this).parents('.page-cart-product-list-item').remove()
+                cart = cart.filter(item => {
+                    if(item.product_id != id){
+                        return item
+                    }
+                })
+                localStorage.setItem('cart', JSON.stringify(cart))
+            })
+
+
+            // увеличение кол-во продукта
+            $(document).on('click', '.page-cart-product-list-item__count_plus', function () {
+                let id = $(this).parents('.page-cart-product-list-item').find('input[name="product_id"]').val()
+                let cart = JSON.parse(localStorage.getItem('cart'))
+                let count = $(this).siblings('input[name="count"]').val();
+
+                $(this).siblings('input[name="count"]').val(Number(count) + 1);
+                cart.map(item => {
+                    if(item.product_id == id){
+                        return item.count += 1
+                    }
+                })
+                localStorage.setItem('cart', JSON.stringify(cart))
+            });
+            // увеличение кол-во продукта
+            $(document).on('click', '.page-cart-product-list-item__count_minus', function () {
+                let id = $(this).parents('.page-cart-product-list-item').find('input[name="product_id"]').val()
+                let cart = JSON.parse(localStorage.getItem('cart'))
+                let count = $(this).siblings('input[name="count"]').val();
+
+                if (count > 1) {
+                    $(this).siblings('input[name="count"]').val(Number(count) - 1)
+                    cart.map(item => {
+                        if(item.product_id == id){
+                            return item.count -= 1
+                        }
+                    })
+                    localStorage.setItem('cart', JSON.stringify(cart))
+                }
+            });
 
         })
     </script>

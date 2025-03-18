@@ -72,6 +72,7 @@
                 <i class="fa-solid fa-heart"></i>
             </div>
             <div class="ml-action_cart">
+                <span class="ml-action_cart__count">0</span>
                 <div class="ml-action_cart_icon">
                     <i class="fa-solid fa-cart-shopping"></i>
                 </div>
@@ -132,9 +133,14 @@
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script>
-    if(window.location.pathname != '/'){
-        $('.list-cat_drop').hide()
-    }
+
+    $(document).ready(function (){
+        if(window.location.pathname != '/'){
+            $('.list-cat_drop').hide()
+        }
+        let cart = JSON.parse(localStorage.getItem('cart'))
+        $('.ml-action_cart__count').text(cart.length)
+    })
 </script>
 
 @yield('script')

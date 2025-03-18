@@ -566,6 +566,7 @@
             </div>
         </div>
     </header>
+
     <section class="categories">
         <div class="container">
             <h2 class="categories__title">Более 30 000 позиций ждут вас</h2>
