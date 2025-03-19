@@ -11,8 +11,8 @@
                         Главная</a>
                 </li>
                 <li class="breadcrumbs__item">
-                    <a href="" class="breadcrumbs__el">
-                        {{ $category->title }}
+                    <a href="{{ route('category',  $product->category->hash) }}" class="breadcrumbs__el">
+                        {{ $product->category->title }}
                     </a>
                 </li>
                 <li class="breadcrumbs__item">
@@ -31,19 +31,20 @@
         <div class="page-product-wrap">
             <div class="container">
                 <div class="page-product-gallery">
+                    @if($product->images->isNotEmpty())
                     <div class="page-product-gallery__thumbs">
                         <div class="page-product-gallery__thumbs__item active">
-                            <img src="{{ asset('images/products/product1.jpg') }}" alt="">
+                            <img src="{{ asset($product->image_path) }}" alt="">
                         </div>
+                        @foreach($product->images as $img)
                         <div class="page-product-gallery__thumbs__item">
-                            <img src="{{ asset('images/products/product1.jpg') }}" alt="">
+                            <img src="{{ asset($img->path) }}" alt="">
                         </div>
-                        <div class="page-product-gallery__thumbs__item">
-                            <img src="{{ asset('images/products/product1.jpg') }}" alt="">
-                        </div>
+                        @endforeach
                     </div>
+                    @endif
                     <div class="page-product-gallery__main">
-                            <img src="{{ asset('images/products/product1.jpg') }}" alt="">
+                            <img src="{{ asset($product->image_path) }}" alt="">
                     </div>
                 </div>
                 <div class="page-product-main">
@@ -89,10 +90,17 @@
                         <span class="page-product-main-dop__title">Аксессуары</span>
                     </div>
                     <div class="page-product-main-action">
+
+                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                        <input type="hidden" name="title" value="{{ $product->title }}">
+                        <input type="hidden" name="product_price" value="{{ $product->price }}">
+                        <input type="hidden" name="product_img" value="{{ $product->image_path }}">
+
+
                         <div class="page-product-main-action__price">
                             <div class="page-product-main-action__price_main">
                                 <span class="page-product-main-action__price_old">54000</span>
-                                <span class="page-product-main-action__price_current">34000</span>
+                                <span class="page-product-main-action__price_current">{{ $product->price }}</span>
                             </div>
                             <div class="page-product-main-action__price_sale">
                                 <div class="page-product-main-action__price_sale-count">-10%</div>
@@ -137,7 +145,7 @@
                 <a href="" class="page-product-info__tabs_item">Гарантия</a>
             </div>
             <div class="page-product-info__cont">
-                <p>Описание бла бла бла</p>
+                <p>{{ $product->description }}</p>
             </div>
         </div>
     </div>
@@ -158,6 +166,58 @@
 @section('script')
     <script>
         $(document).ready(function (){
+            // клик на картинки сбоку и отобранежение их как главную
+            $('.page-product-gallery__thumbs__item').on('click', function (){
+
+                let path = $(this).find('img').attr('src')
+                $('.page-product-gallery__main img').attr('src', path)
+
+                $('.page-product-gallery__thumbs__item').removeClass('active')
+                $(this).addClass('active')
+            })
+
+            // Plus
+            $('.page-product-main-action__count_plus').on('click', function (){
+                let count = $(this).siblings('input[name="count"]').val();
+                $(this).siblings('input[name="count"]').val(Number(count) + 1);
+            })
+            // Minus
+            $('.page-product-main-action__count_minus').on('click', function (){
+                let count = $(this).siblings('input[name="count"]').val();
+                if(count > 1){
+                    $(this).siblings('input[name="count"]').val(Number(count) - 1);
+                }
+            })
+            // In cart
+            $('.page-product-main-action__buy').on('click', function (){
+                let id = $('input[name="product_id"]').val();
+                let title = $('input[name="product_title"]').val();
+                let price = $('input[name="product_price"]').val();
+                let img_path = $('input[name="product_img"]').val();
+                let count = $('input[name="count"]').val();
+
+                let product = {
+                    product_id: id,
+                    product_title: title,
+                    count: count,
+                    product_price: price,
+                    product_img: img_path,
+                };
+                let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                let match = false;
+
+                cart.forEach(item => {
+                    if (item.product_id == product.product_id) {
+                        item.count = Number(item.count) + Number(product.count); // Увеличиваем количество, если товар уже есть в корзине
+                        match = true;
+                    }
+                });
+
+                if (!match) {
+                    cart.push(product); // Добавляем новый товар, если его еще нет
+                }
+                localStorage.setItem('cart', JSON.stringify(cart));
+            })
 
         })
     </script>

@@ -81,17 +81,17 @@
                 <span class="pcart-main-order__title">Ваш заказ</span>
 
                 <div class="pcart-main-order__info">
-                    <div class="pcart-main-order__info-item">
+                    <div class="pcart-main-order__info-item result-product-count">
                         <div class="pcart-main-order__info-item_title">Всего товаров:</div>
-                        <div class="pcart-main-order__info-item_val">4 шт</div>
+                        <div class="pcart-main-order__info-item_val"><span class="num">0</span> шт</div>
                     </div>
-                    <div class="pcart-main-order__info-item">
+                    <div class="pcart-main-order__info-item result-product-sum">
                         <div class="pcart-main-order__info-item_title">Сумма заказа:</div>
-                        <div class="pcart-main-order__info-item_val">100 byn</div>
+                        <div class="pcart-main-order__info-item_val"><span class="num">0</span> byn</div>
                     </div>
-                    <div class="pcart-main-order__info-item">
+                    <div class="pcart-main-order__info-item result-product-itog">
                         <div class="pcart-main-order__info-item_title">К оплате:</div>
-                        <div class="pcart-main-order__info-item_val result">400 byn</div>
+                        <div class="pcart-main-order__info-item_val result"><span class="num">0</span> byn</div>
                     </div>
                     <div class="pcart-main-order__buy-wrap">
                         <button class="pcart-main-order__buy">Оформить заказ</button>
@@ -110,6 +110,17 @@
 
     <script>
         $(document).ready(function (){
+
+            let calculate_result_sum = function (cart){
+                if(cart != null){
+                    let result = 0;
+                    cart.forEach(item => {
+                        result += item.product_price * item.count;
+                    })
+                    return result;
+                }
+            }
+
             let cart = JSON.parse(localStorage.getItem('cart'))
             let output = ``
             //отображение продуктов корзины из локалсторэдж
@@ -122,7 +133,7 @@
                             <img src="${item.product_img}" alt="">
                         </div>
                         <div class="page-cart-product-list-item__info">
-                            <a href="" class="page-cart-product-list-item__title">${item.product_title}</a>
+                            <a href="product/${item.hash}" class="page-cart-product-list-item__title">${item.product_title}</a>
                             <div class="page-cart-product-list-item_options">
                                 <span class="">Красный</span>
                                 <span class="">144х123х123</span>
@@ -146,6 +157,11 @@
 
             $('.page-cart-product-list').html(output)
 
+            // вывод Всего товаров, Сумма заказа, К оплате
+            $('.result-product-count .pcart-main-order__info-item_val .num').text(cart.length)
+            $('.result-product-sum .pcart-main-order__info-item_val .num').text(calculate_result_sum(cart))
+            $('.result-product-itog .pcart-main-order__info-item_val .num').text(calculate_result_sum(cart))
+
 
             // удаление товара из корзины
             $(document).on('click', '.page-cart-product-list-item__remove', function (){
@@ -157,6 +173,9 @@
                         return item
                     }
                 })
+                $('.result-product-count .pcart-main-order__info-item_val .num').text(cart.length)
+                $('.result-product-sum .pcart-main-order__info-item_val .num').text(calculate_result_sum(cart))
+                $('.result-product-itog .pcart-main-order__info-item_val .num').text(calculate_result_sum(cart))
                 localStorage.setItem('cart', JSON.stringify(cart))
             })
 
@@ -173,8 +192,13 @@
                         return item.count += 1
                     }
                 })
+                $('.result-product-count .pcart-main-order__info-item_val .num').text(cart.length)
+                $('.result-product-sum .pcart-main-order__info-item_val .num').text(calculate_result_sum(cart))
+                $('.result-product-itog .pcart-main-order__info-item_val .num').text(calculate_result_sum(cart))
                 localStorage.setItem('cart', JSON.stringify(cart))
             });
+
+
             // увеличение кол-во продукта
             $(document).on('click', '.page-cart-product-list-item__count_minus', function () {
                 let id = $(this).parents('.page-cart-product-list-item').find('input[name="product_id"]').val()
@@ -188,9 +212,14 @@
                             return item.count -= 1
                         }
                     })
+                    $('.result-product-count .pcart-main-order__info-item_val .num').text(cart.length)
+                    $('.result-product-sum .pcart-main-order__info-item_val .num').text(calculate_result_sum(cart))
+                    $('.result-product-itog .pcart-main-order__info-item_val .num').text(calculate_result_sum(cart))
                     localStorage.setItem('cart', JSON.stringify(cart))
                 }
             });
+
+
 
         })
     </script>
