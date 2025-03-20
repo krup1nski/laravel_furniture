@@ -119,6 +119,7 @@
                     @foreach($data['products'] as $product)
                         <div class="mini-product">
                             <input type="hidden" name="product_id" value="{{ $product->id }}">
+                            <input type="hidden" name="product_hash" value="{{ $product->hash }}">
                             <div class="mini-product__top">
                                 <div class="mini-product__stock">{{ $product->quantity }} шт.</div>
                                 <div class="mini-product__action">
@@ -144,7 +145,7 @@
                             <div class="mini-product__price">
                                 <div class="mini-product__price_main">
                                     <span class="mini-product__price_old">459 BYN</span>
-                                    <span class="mini-product__price_current">379 BYN</span>
+                                    <span class="mini-product__price_current">{{ $product->price }} BYN</span>
                                 </div>
                                 <div class="mini-product__price_sale">
                                     <div class="mini-product__price_sale-count">-10%</div>
@@ -190,6 +191,7 @@
                 let title = $(this).parents('.mini-product').find('.mini-product__title').text().trim();
                 let price = $(this).parents('.mini-product').find('.mini-product__price_current').text().trim().replace(' BYN', '');
                 let img_path = $(this).parents('.mini-product').find('.mini-product__img img').attr('src');
+                let product_hash = $('input[name="product_hash"]').val();
 
                 let product = {
                     product_id: id,
@@ -197,6 +199,7 @@
                     count: 1,
                     product_price: price,
                     product_img: img_path,
+                    product_hash: product_hash,
                 };
 
                 let cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -212,6 +215,7 @@
                 if (!match) {
                     cart.push(product); // Добавляем новый товар, если его еще нет
                 }
+                $('.ml-action_cart__count').text(cart.length)
                 localStorage.setItem('cart', JSON.stringify(cart));
             });
         })

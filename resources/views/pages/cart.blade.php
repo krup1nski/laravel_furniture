@@ -133,7 +133,7 @@
                             <img src="${item.product_img}" alt="">
                         </div>
                         <div class="page-cart-product-list-item__info">
-                            <a href="product/${item.hash}" class="page-cart-product-list-item__title">${item.product_title}</a>
+                            <a href="product/${item.product_hash}" class="page-cart-product-list-item__title">${item.product_title}</a>
                             <div class="page-cart-product-list-item_options">
                                 <span class="">Красный</span>
                                 <span class="">144х123х123</span>

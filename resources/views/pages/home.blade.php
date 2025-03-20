@@ -575,7 +575,7 @@
                 @foreach($categories as $category)
                     <div class="categories__item">
                         <div class="categories__item_icon">
-                            <img src="{{ asset('images/cat_svg/table.svg') }}" alt="">
+                            <img src="{{ $category->icon }}" alt="">
                         </div>
                         <h4 class="categories__item_title">
                             <a href="{{route('category',$category->hash)}}">{{$category->title}}</a>

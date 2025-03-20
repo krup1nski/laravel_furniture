@@ -138,8 +138,8 @@
         if(window.location.pathname != '/'){
             $('.list-cat_drop').hide()
         }
-        let cart = JSON.parse(localStorage.getItem('cart'))
-        $('.ml-action_cart__count').text(cart.length)
+        let cart = JSON.parse(localStorage.getItem('cart')) || []; // Добавляем fallback для пустого cart
+        $('.ml-action_cart__count').text(cart.length);
     })
 </script>
 

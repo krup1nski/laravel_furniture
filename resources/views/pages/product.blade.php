@@ -69,23 +69,21 @@
                             </div>
                         </div>
                     </div>
+
+                    @foreach($product->options->groupBy('option_group_id') as $key => $group)
                     <div class="page-product-main-options">
-                        <span class="page-product-main-options__title">Цвет</span>
+                        <span class="page-product-main-options__title">{{ $grouppp->where('id', $key)->first()->title }}</span>
                         <div class="page-product-main-options__items">
+                            @foreach($group as $option)
                             <div class="page-product-main-options__item active">
-                                <img src="{{ asset('images/wood/1.png') }}" alt="">
+                                <img src="{{ asset($option->image) }}" alt="{{ $option->title }}">
                             </div>
-                            <div class="page-product-main-options__item">
-                                <img src="{{ asset('images/wood/2.png') }}" alt="">
-                            </div>
-                            <div class="page-product-main-options__item">
-                                <img src="{{ asset('images/wood/3.png') }}" alt="">
-                            </div>
-                            <div class="page-product-main-options__item">
-                                <img src="{{ asset('images/wood/4.png') }}" alt="">
-                            </div>
+                            @endforeach
                         </div>
                     </div>
+                    @endforeach
+
+
                     <div class="page-product-main-dop">
                         <span class="page-product-main-dop__title">Аксессуары</span>
                     </div>
@@ -95,6 +93,7 @@
                         <input type="hidden" name="title" value="{{ $product->title }}">
                         <input type="hidden" name="product_price" value="{{ $product->price }}">
                         <input type="hidden" name="product_img" value="{{ $product->image_path }}">
+                        <input type="hidden" name="product_hash" value="{{ $product->hash }}">
 
 
                         <div class="page-product-main-action__price">
@@ -139,9 +138,7 @@
             <div class="page-product-info__tabs">
                 <a href="" class="page-product-info__tabs_item">Описание товара</a>
                 <a href="" class="page-product-info__tabs_item">Отзывы о товаре</a>
-                <a href="" class="page-product-info__tabs_item">Доставка</a>
-                <a href="" class="page-product-info__tabs_item">Сборка</a>
-                <a href="" class="page-product-info__tabs_item">Оплата</a>
+                <a href="" class="page-product-info__tabs_item">Характеристики</a>
                 <a href="" class="page-product-info__tabs_item">Гарантия</a>
             </div>
             <div class="page-product-info__cont">
@@ -195,6 +192,7 @@
                 let price = $('input[name="product_price"]').val();
                 let img_path = $('input[name="product_img"]').val();
                 let count = $('input[name="count"]').val();
+                let product_hash = $('input[name="product_hash"]').val();
 
                 let product = {
                     product_id: id,
@@ -202,6 +200,7 @@
                     count: count,
                     product_price: price,
                     product_img: img_path,
+                    product_hash: product_hash,
                 };
                 let cart = JSON.parse(localStorage.getItem('cart')) || [];
                 let match = false;
@@ -216,9 +215,10 @@
                 if (!match) {
                     cart.push(product); // Добавляем новый товар, если его еще нет
                 }
-                localStorage.setItem('cart', JSON.stringify(cart));
-            })
 
+                localStorage.setItem('cart', JSON.stringify(cart));
+
+            })
         })
     </script>
 @endsection
