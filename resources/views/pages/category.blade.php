@@ -200,6 +200,7 @@
                     product_price: price,
                     product_img: img_path,
                     product_hash: product_hash,
+                    product_options: [],
                 };
 
                 let cart = JSON.parse(localStorage.getItem('cart')) || [];

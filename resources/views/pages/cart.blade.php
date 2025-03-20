@@ -125,6 +125,14 @@
             let output = ``
             //отображение продуктов корзины из локалсторэдж
             cart.forEach(item => {
+
+                let options = ``
+                if(item.product_options.option_title){
+                    options += `
+                        <span>${item.product_options.option_title}</span>
+                    `
+                }
+
                 output += `
                 <div class="page-cart-product-list-item">
                     <input type="hidden" name="product_id" value="${item.product_id}" >
@@ -134,10 +142,7 @@
                         </div>
                         <div class="page-cart-product-list-item__info">
                             <a href="product/${item.product_hash}" class="page-cart-product-list-item__title">${item.product_title}</a>
-                            <div class="page-cart-product-list-item_options">
-                                <span class="">Красный</span>
-                                <span class="">144х123х123</span>
-                            </div>
+                            <div class="page-cart-product-list-item_options">${options}</div>
                         </div>
                     </div>
                     <div class="page-cart-product-list-item__count">
@@ -176,6 +181,7 @@
                 $('.result-product-count .pcart-main-order__info-item_val .num').text(cart.length)
                 $('.result-product-sum .pcart-main-order__info-item_val .num').text(calculate_result_sum(cart))
                 $('.result-product-itog .pcart-main-order__info-item_val .num').text(calculate_result_sum(cart))
+                $('.ml-action_cart__count').text(cart.length);
                 localStorage.setItem('cart', JSON.stringify(cart))
             })
 
@@ -199,7 +205,7 @@
             });
 
 
-            // увеличение кол-во продукта
+            // сокращение кол-во продукта
             $(document).on('click', '.page-cart-product-list-item__count_minus', function () {
                 let id = $(this).parents('.page-cart-product-list-item').find('input[name="product_id"]').val()
                 let cart = JSON.parse(localStorage.getItem('cart'))

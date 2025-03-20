@@ -75,7 +75,7 @@
                         <span class="page-product-main-options__title">{{ $grouppp->where('id', $key)->first()->title }}</span>
                         <div class="page-product-main-options__items">
                             @foreach($group as $option)
-                            <div class="page-product-main-options__item active">
+                            <div class="page-product-main-options__item " data-option-group-id="{{ $key }}" data-option-id="{{ $option->id }}" data-option-title="{{ $option->title }}">
                                 <img src="{{ asset($option->image) }}" alt="{{ $option->title }}">
                             </div>
                             @endforeach
@@ -90,10 +90,11 @@
                     <div class="page-product-main-action">
 
                         <input type="hidden" name="product_id" value="{{ $product->id }}">
-                        <input type="hidden" name="title" value="{{ $product->title }}">
+                        <input type="hidden" name="product_title" value="{{ $product->title }}">
                         <input type="hidden" name="product_price" value="{{ $product->price }}">
                         <input type="hidden" name="product_img" value="{{ $product->image_path }}">
                         <input type="hidden" name="product_hash" value="{{ $product->hash }}">
+                        <input type="hidden" name="with_options" value="{{ $product->options->isNotEmpty() ? 1 : 0 }}">
 
 
                         <div class="page-product-main-action__price">
@@ -185,6 +186,14 @@
                     $(this).siblings('input[name="count"]').val(Number(count) - 1);
                 }
             })
+
+            //выбор цвета
+            $('.page-product-main-options__item:first-child').addClass('active')
+            $('.page-product-main-options__item').on('click', function (){
+                $('.page-product-main-options__item').removeClass('active')
+                $(this).addClass('active')
+            })
+
             // In cart
             $('.page-product-main-action__buy').on('click', function (){
                 let id = $('input[name="product_id"]').val();
@@ -193,6 +202,17 @@
                 let img_path = $('input[name="product_img"]').val();
                 let count = $('input[name="count"]').val();
                 let product_hash = $('input[name="product_hash"]').val();
+                let with_options = $('input[name="with_options"]').val();
+
+                let options = {}
+                if(with_options){
+                    options = {
+                        option_group_id: $('.page-product-main-options__item.active').attr('data-option-group-id'),
+                        option_id: $('.page-product-main-options__item.active').attr('data-option-id'),
+                        option_title: $('.page-product-main-options__item.active').attr('data-option-title'),
+                    }
+                }
+
 
                 let product = {
                     product_id: id,
@@ -201,6 +221,7 @@
                     product_price: price,
                     product_img: img_path,
                     product_hash: product_hash,
+                    product_options: options,
                 };
                 let cart = JSON.parse(localStorage.getItem('cart')) || [];
                 let match = false;
@@ -215,7 +236,7 @@
                 if (!match) {
                     cart.push(product); // Добавляем новый товар, если его еще нет
                 }
-
+                $('.ml-action_cart__count').text(cart.length);
                 localStorage.setItem('cart', JSON.stringify(cart));
 
             })
