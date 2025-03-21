@@ -11,4 +11,8 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/category/{hash}', [CategoriesController::class, 'index'])->name('category');
 Route::get('/product/{hash}', [ProductController::class, 'index'])->name('product');
 Route::get('/cart', [CartController::class, 'index'])->name('cart');
+Route::get('/cart/thanks', [CartController::class, 'thanks'])->name('thanks');
+
+Route::post('/cart/order', [CartController::class, 'order'])->name('cart-order');
+
 

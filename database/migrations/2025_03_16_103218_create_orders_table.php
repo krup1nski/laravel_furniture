@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('fio');
             $table->string('phone');
-            $table->string('email');
+            $table->string('email')->nullable();
             $table->text('comment')->nullable();
             $table->string('status')->default('created');
             $table->integer('price');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');

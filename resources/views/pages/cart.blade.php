@@ -225,7 +225,28 @@
                 }
             });
 
+            $('.pcart-main-order__buy').on('click', function (e){
+                e.preventDefault()
+                let name = $('input[name="name"]').val()
+                let phone = $('input[name="phone"]').val()
+                let email = $('input[name="email"]').val()
+                let comment = $('textarea[name="comment"]').val()
 
+                $.ajax({
+                    url: "{{ route('cart-order') }}",
+                    type: "POST",
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        cart: JSON.parse(localStorage.getItem('cart')), name, phone, email, comment
+                    },
+                    success:function (response){
+                        if(response){//очищаем корзину + редирект
+                            window.location.replace("/thanks")
+                            localStorage.setItem('cart', null)
+                        }
+                    }
+                })
+            })
 
         })
     </script>
