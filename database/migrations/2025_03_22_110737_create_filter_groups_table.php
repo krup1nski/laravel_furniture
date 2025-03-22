@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('specials', function (Blueprint $table) {
+        Schema::create('filter_groups', function (Blueprint $table) {
             $table->id();
             $table->string('title');
         });
@@ -22,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('special');
+        Schema::dropIfExists('filter_group');
     }
 };

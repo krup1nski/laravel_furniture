@@ -241,7 +241,7 @@
                     },
                     success:function (response){
                         if(response){//очищаем корзину + редирект
-                            window.location.replace("/thanks")
+                            window.location.replace("/cart/thanks")
                             localStorage.setItem('cart', null)
                         }
                     }

@@ -13,7 +13,13 @@ return new class extends Migration
     {
         Schema::create('filters', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('group_id');
             $table->string('title');
+
+            $table->foreign('group_id')
+                ->references('id')
+                ->on('filter_groups')
+                ->onDelete('cascade');
         });
     }
 

@@ -33,7 +33,7 @@
 
     <div class="page-category">
         <div class="container">
-            <div class="pc-filter">
+            <form class="pc-filter">
                 <div class="pc-filter__top">
                     <div class="pc-filter__title">Фильтр</div>
                     <div class="pc-filter__icon">
@@ -42,67 +42,48 @@
                 </div>
                 <div class="pc-filter-price">
                     <div class="pc-filter-price__inputs">
+                        @if(isset($data['price_from']) && isset($data['price_to']))
                         <input type="text" id="filter-price-slider-from" class="pc-filter-price__input"
-                               name="price_from" placeholder="от 100">
+                               name="price_from" placeholder="от 0" value="{{ $data['price_from'] }}">
                         <input type="text" id="filter-price-slider-to" class="pc-filter-price__input" name="price_to"
-                               placeholder="до 3500">
+                               placeholder="до 9999" value="{{ $data['price_to'] }}">
+                        @else
+                            <input type="text" id="filter-price-slider-from" class="pc-filter-price__input"
+                                   name="price_from" placeholder="от 0">
+                            <input type="text" id="filter-price-slider-to" class="pc-filter-price__input" name="price_to"
+                                   placeholder="до 9999">
+                        @endif
                     </div>
                     <div id="filter-price-slider" class="pc-filter-price__slider"></div>
                 </div>
+
+                @foreach($data['filters'] as $key => $filter)
                 <div class="pc-filter__item">
                     <div class="pc-filter__item_top">
-                        <span class="pc-filter__item_title">Конструкция</span>
+                        <span class="pc-filter__item_title">{{ $key }}</span>
                         <div class="pc-filter__item_icon">
                                 <i class="fa-solid fa-angle-up"></i>
                             </div>
                     </div>
                     <div class="pc-filter__item_cont">
+                        @foreach($filter as $f)
                         <label class="pc-filter-checkbox">
                             <input type="checkbox" name="dsa" class="pc-filter-checkbox__checkbox">
                             <div class="pc-filter-checkbox__box"></div>
-                            <span class="pc-filter-checkbox__value">С ящиком</span>
+                            <span class="pc-filter-checkbox__value">{{$f['title']}}</span>
                         </label>
-                        <label class="pc-filter-checkbox">
-                            <input type="checkbox" name="dsa" class="pc-filter-checkbox__checkbox">
-                            <div class="pc-filter-checkbox__box"></div>
-                            <span class="pc-filter-checkbox__value">С зеркалом</span>
-                        </label>
-                        <label class="pc-filter-checkbox">
-                            <input type="checkbox" name="dsa" class="pc-filter-checkbox__checkbox">
-                            <div class="pc-filter-checkbox__box"></div>
-                            <span class="pc-filter-checkbox__value">Угловые</span>
-                        </label>
+                        @endforeach
                     </div>
                 </div>
+                @endforeach
 
 
-                <div class="pc-filter__item">
-                    <div class="pc-filter__item_top">
-                        <span class="pc-filter__item_title">Цвет</span>
-                        <div class="pc-filter__item_icon">
-                            <i class="fa-solid fa-angle-up"></i>
-                        </div>
-                    </div>
-                    <div class="pc-filter__item_cont">
-                        <label class="pc-filter-checkbox">
-                            <input type="checkbox" name="dsa" class="pc-filter-checkbox__checkbox">
-                            <div class="pc-filter-checkbox__box"></div>
-                            <span class="pc-filter-checkbox__value">Белые</span>
-                        </label>
-                        <label class="pc-filter-checkbox">
-                            <input type="checkbox" name="dsa" class="pc-filter-checkbox__checkbox">
-                            <div class="pc-filter-checkbox__box"></div>
-                            <span class="pc-filter-checkbox__value">Глянец</span>
-                        </label>
-                        <label class="pc-filter-checkbox">
-                            <input type="checkbox" name="dsa" class="pc-filter-checkbox__checkbox">
-                            <div class="pc-filter-checkbox__box"></div>
-                            <span class="pc-filter-checkbox__value">Черные</span>
-                        </label>
-                    </div>
+                <div class="pc-filter__action">
+                    <button class="pc-filter__btn">Применить</button>
+                    <a href="{{ route('category', $data['category']->hash) }}" class="pc-filter__reset">Сбросить</a>
                 </div>
 
-            </div>
+            </form>
 
             <div class="page-category__content">
                 <div class="page-category__sort">
@@ -177,7 +158,7 @@
                 range: true,
                 min: 0,
                 max: 9999,
-                values: [1000, 9000], // Числа, а не строки!
+                values: [0, 9999],
                 slide: function (event, ui) {
                     $("#filter-price-slider-from").val(ui.values[0]);
                     $("#filter-price-slider-to").val(ui.values[1]);

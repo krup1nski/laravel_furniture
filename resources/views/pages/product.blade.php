@@ -137,13 +137,25 @@
     <div class="page-product-info">
         <div class="container">
             <div class="page-product-info__tabs">
-                <a href="" class="page-product-info__tabs_item">Описание товара</a>
-                <a href="" class="page-product-info__tabs_item">Отзывы о товаре</a>
-                <a href="" class="page-product-info__tabs_item">Характеристики</a>
-                <a href="" class="page-product-info__tabs_item">Гарантия</a>
+                <a href="" class="page-product-info__tabs_item active" data-tab="1">Описание товара</a>
+                <a href="" class="page-product-info__tabs_item" data-tab="2">Характеристики</a>
+                <a href="" class="page-product-info__tabs_item" data-tab="3">Отзывы о товаре</a>
+                <a href="" class="page-product-info__tabs_item" data-tab="4">Гарантия</a>
             </div>
-            <div class="page-product-info__cont">
-                <p>{{ $product->description }}</p>
+            <div class="page-product-info__content">
+                <div class="page-product-info__content_tab active" data-tab="1">{{ $product->description }}</div>
+                <div class="page-product-info__content_tab" data-tab="2">
+                    <div class="page-product-filters">
+                    @foreach($product->filters as $filter)
+                        <div class="page-product-filters__item">
+                            <span class="key">{{ $filters_group->find($filter->group_id)->title }}</span>
+                            <span class="value">{{ $filter->title}}</span>
+                        </div>
+                    @endforeach
+                    </div>
+                </div>
+                <div class="page-product-info__content_tab" data-tab="3">Отзывы о товаре</div>
+                <div class="page-product-info__content_tab" data-tab="4">Гарантия</div>
             </div>
         </div>
     </div>
@@ -164,6 +176,15 @@
 @section('script')
     <script>
         $(document).ready(function (){
+            //Описание-Характеристики-Отзывы-Гарантия
+            $('.page-product-info__tabs_item').on('click', function (e){
+                e.preventDefault()
+                $('.page-product-info__tabs_item').removeClass('active')
+                $('.page-product-info__content_tab').removeClass('active')
+                $(this).addClass('active')
+                $('.page-product-info__content_tab[data-tab="' + $(this).attr('data-tab') + '"]').addClass('active')
+            })
+
             // клик на картинки сбоку и отобранежение их как главную
             $('.page-product-gallery__thumbs__item').on('click', function (){
 
