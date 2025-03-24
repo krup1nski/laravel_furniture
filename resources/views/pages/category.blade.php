@@ -139,6 +139,10 @@
                         </div>
                     @endforeach
 
+                    <div class="page-category__pagination">
+                        {{ $data['products']->links() }}
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -158,7 +162,8 @@
                 range: true,
                 min: 0,
                 max: 9999,
-                values: [0, 9999],
+                // values: [0, 9999],
+                values: ['{{ $price_from ?? 0 }}','{{ $price_to ?? 9999 }}'],
                 slide: function (event, ui) {
                     $("#filter-price-slider-from").val(ui.values[0]);
                     $("#filter-price-slider-to").val(ui.values[1]);

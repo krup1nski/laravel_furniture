@@ -1256,7 +1256,7 @@ body{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 25px;color: var(--gray-d);
+    margin-bottom: 25px;color: var(--gray-l);
 }
 .pcart-main-order__info-item_val.result{
     color: var(--text);
@@ -1275,5 +1275,39 @@ body{
     color: #fff;
     border: none;
     outline: none;
+}
+
+.page-category__pagination{
+    background-color: var(--gray-l);
+    border: 1px solid var(--gray);
+}
+.page-category__pagination li a, .page-category__pagination li span{
+    color: var(--text);
+    text-decoration: none;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color .25s ease;
+}
+.page-category__pagination li a{
+    color: var(--gray-sd);
+}
+.page-category__pagination li a:hover{
+    color: var(--text);
+}
+.page-category__pagination li.active span{
+    color: var(--accent);
+    border: 1px solid var(--accent);
+}
+
+
+.page-category__pagination ul.pagination{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
 }
 

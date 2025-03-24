@@ -20,7 +20,7 @@ class CategoriesController extends Controller
             $data['price_to'] = $request->price_to;
         }else{
             $data['products'] = Product::where('categories_id', $data['category']->id)
-                ->get();
+                ->paginate(4)->withQueryString();//  4 товара - сохранение фильтра в адресной строке
         }
 
         $data['filters'] = Filter::with('group')->get()->groupBy('group.title');
