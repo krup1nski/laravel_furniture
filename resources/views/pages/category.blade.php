@@ -6,7 +6,7 @@
         <div class="container">
             <ul class="breadcrumbs__list">
                 <li class="breadcrumbs__item">
-                    <a href="" class="breadcrumbs__el">
+                    <a href="{{ route('home') }}" class="breadcrumbs__el">
                         <i class="fa-solid fa-house"></i>
                         Главная</a>
                 </li>
@@ -68,7 +68,7 @@
                     <div class="pc-filter__item_cont">
                         @foreach($filter as $f)
                         <label class="pc-filter-checkbox">
-                            <input type="checkbox" name="dsa" class="pc-filter-checkbox__checkbox">
+                            <input type="checkbox" class="pc-filter-checkbox__checkbox" name="filters[{{$f->id }}]" @if(in_array($f->id,  $data['select_filters'])) checked @endif>
                             <div class="pc-filter-checkbox__box"></div>
                             <span class="pc-filter-checkbox__value">{{$f['title']}}</span>
                         </label>
