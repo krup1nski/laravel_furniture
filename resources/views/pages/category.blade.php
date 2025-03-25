@@ -34,6 +34,7 @@
     <div class="page-category">
         <div class="container">
             <form class="pc-filter">
+                <input type="hidden" name="order_by" value="">
                 <div class="pc-filter__top">
                     <div class="pc-filter__title">Фильтр</div>
                     <div class="pc-filter__icon">
@@ -69,7 +70,9 @@
                         @foreach($filter as $f)
                         <label class="pc-filter-checkbox">
                             <input type="checkbox" class="pc-filter-checkbox__checkbox" name="filters[{{$f->id }}]" @if(in_array($f->id,  $data['select_filters'])) checked @endif>
-                            <div class="pc-filter-checkbox__box"></div>
+                            <div class="pc-filter-checkbox__box">
+                                <i class="fa-solid fa-check"></i>
+                            </div>
                             <span class="pc-filter-checkbox__value">{{$f['title']}}</span>
                         </label>
                         @endforeach
@@ -89,7 +92,11 @@
                 <div class="page-category__sort">
                     <div class="pc-select">
                         <span class="pc-selector__title">Сортировка:</span>
-                        <span class="pc-selector__val">По умолчанию</span>
+                        <select name="order_by" id="" class="pc-selector__val">
+                            <option value="">По умолчанию</option>
+                            <option value="price_increase" @if($data['order_by'] == 'price_increase') selected @endif>По возрастанию</option>
+                            <option value="price_decrease" @if($data['order_by'] == 'price_decrease') selected @endif>По убыванию</option>
+                        </select>
                     </div>
                     <div class="pc-view">
 
@@ -158,6 +165,14 @@
 
     <script>
         $(document).ready(function (){
+
+            // при выборе варианта сортировки добавляем его в форму
+            $('select[name="order_by"]').on('change', function (){
+                $('.pc-filter input[name="order_by"]').val($(this).val())
+            })
+
+
+            // поле с выбором цены и ползунки
             $("#filter-price-slider").slider({
                 range: true,
                 min: 0,

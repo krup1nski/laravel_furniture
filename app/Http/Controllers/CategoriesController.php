@@ -7,7 +7,7 @@ use App\Models\Filter;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
-class CategoriesController extends Controller
+class CategoriesController extends MainController
 {
 //    public function index($hash, Request $request){
 ////        dd($request);
@@ -34,12 +34,14 @@ class CategoriesController extends Controller
     public function index($hash, Request $request){
 //        dd($request);
 
-
-
         $data['category'] = Category::where('hash', $hash)->first();
         $data['select_filters'] = [];
+        $data['order_by'] = $request->get('order_by');
+        $data['price_from'] = $request->price_from;
+        $data['price_to'] = $request->price_to;
 
-        $data['products'] = Product::where('categories_id', $data['category']->id)
+        // price от и до
+        $products = Product::with('filters')->where('categories_id', $data['category']->id)
                 ->when($request->price_from, function ($q, $price_from) {
                 $q->where('price', '>=', $price_from);
                 })
@@ -47,22 +49,38 @@ class CategoriesController extends Controller
                     $q->where('price', '<=', $price_to);
                 });
 
-
+        // фильтры если выбраны
         if(!empty($request->filters)) {
             foreach ($request->filters as $key => $value) {
                 $data['select_filters'][] = $key;
             }
-            $data['products']->whereHas('filters', function ($q) use ($data) {
+            $products->whereHas('filters', function ($q) use ($data) {
                 return $q->whereIn('filter_id', $data['select_filters']);
             });
         }
 
-        $data['products'] = $data['products']->paginate(2)->withQueryString();
-        $data['price_from'] = $request->price_from;
-        $data['price_to'] = $request->price_to;
+        //сортировка по убыв и возр
+        if($request->get('order_by') == 'price_increase'){
+            $products->orderBy('price', 'asc');
+        }else if($request->get('order_by') == 'price_decrease'){
+            $products->orderBy('price', 'desc');
+        }
+
+        $prod_ids = Product::with('filters')->where('categories_id', $data['category']->id)->select('id')->get();
+
+        $data['products'] =  $products->paginate(4)->withQueryString();
+
+        $filters = [];
+        foreach ($prod_ids as $prod) {
+            foreach ($prod->filters as $f) {
+                if(!in_array($f->id, $filters)){
+                    $filters[] = $f->id;
+                }
+            };
+        }
 
 
-        $data['filters'] = Filter::with('group')->get()->groupBy('group.title');
+        $data['filters'] = Filter::with('group')->whereIn('id', $filters)->get()->groupBy('group.title');
 
         return view('pages/category', compact('data'));
     }

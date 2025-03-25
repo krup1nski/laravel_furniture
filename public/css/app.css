@@ -715,12 +715,19 @@ body{
 }
 .pc-filter-checkbox__checkbox:checked ~.pc-filter-checkbox__box{
     background-color: var(--accent);
+    border: var(--accent);
 }
 .pc-filter-checkbox__box{
     width: 15px;
     height: 15px;
     border: 1px solid var(--gray-d);
     margin-right: 10px;
+}
+.pc-filter-checkbox__box i{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gray-l);
 }
 .pc-filter__item_top{
     display: flex;

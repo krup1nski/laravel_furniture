@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Home</title>
+    <meta name="description" content="">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,6 +20,11 @@
 
 </head>
 <body>
+
+@php
+    $categories = app\Models\Category::all()
+@endphp
+
 <div class="top-line">
     <div class="container flex-center">
         <div class="top-line__main flex-center">
@@ -36,7 +42,8 @@
                 </div>
             </div>
 
-            <div class="top-line-time flex-center"><span class="top-line-time__text"> Пн-Пт <span>c 9:00 до 21:00</span></span></div>
+            <div class="top-line-time flex-center"><span class="top-line-time__text"> Пн-Пт <span>c 9:00 до 21:00</span></span>
+            </div>
         </div>
         <div class="user-account flex-center">
             <div class="user-account__icon">
@@ -96,17 +103,10 @@
             </div>
             <div class="list-cat_drop">
                 <ul class="list-cat__list">
-
-                    <li class="list-cat__list_item"><a href="" class="list-cat__list_link">Комоды и тумбы</a></li>
-                    <li class="list-cat__list_item"><a href="" class="list-cat__list_link">Мебель для детской</a></li>
-                    <li class="list-cat__list_item"><a href="" class="list-cat__list_link">Мебель для кухни</a></li>
-                    <li class="list-cat__list_item"><a href="" class="list-cat__list_link">Прихожие</a></li>
-                    <li class="list-cat__list_item"><a href="" class="list-cat__list_link">Стенки для гостиной</a></li>
-                    <li class="list-cat__list_item"><a href="" class="list-cat__list_link">Столы</a></li>
-                    <li class="list-cat__list_item"><a href="" class="list-cat__list_link">Шкафы</a></li>
-                    <li class="list-cat__list_item"><a href="" class="list-cat__list_link">Диваны</a></li>
-                    <li class="list-cat__list_item"><a href="" class="list-cat__list_link">Кресла</a></li>
-                    <li class="list-cat__list_item"><a href="" class="list-cat__list_link">Пуфы</a></li>
+                    @foreach($categories as $category)
+                        <li class="list-cat__list_item"><a href=""
+                                                           class="list-cat__list_link">{{ $category->title }}</a></li>
+                    @endforeach
                 </ul>
             </div>
         </div>
@@ -130,12 +130,11 @@
 @include('partials.footer')
 
 
-
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script>
 
-    $(document).ready(function (){
-        if(window.location.pathname != '/'){
+    $(document).ready(function () {
+        if (window.location.pathname != '/') {
             $('.list-cat_drop').hide()
         }
         let cart = JSON.parse(localStorage.getItem('cart')) || []; // Добавляем fallback для пустого cart
