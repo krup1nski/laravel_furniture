@@ -5,14 +5,22 @@
     <div class="breadcrumbs">
         <div class="container">
             <ul class="breadcrumbs__list">
-                <li class="breadcrumbs__item">
-                    <a href="{{ route('home') }}" class="breadcrumbs__el">
-                        <i class="fa-solid fa-house"></i>
-                        Главная</a>
-                </li>
-                <li class="breadcrumbs__item">
-                    <span class="breadcrumbs__el">{{ $data['category']->title }}</span>
-                </li>
+{{--                @dd($bradcrumbs)--}}
+
+                @foreach($bradcrumbs as $br)
+                    <li class="breadcrumbs__item">
+                        @if($loop->last)
+                            <span class="breadcrumbs__el">{{ $data['category']->title }}</span>
+                        @else
+                            <a href="{{ $br['href'] }}" class="breadcrumbs__el">
+                                @if($br['is_home'])
+                                    <i class="fa-solid fa-house"></i>
+                                @endif
+                                {{ $br['title'] }}</a>
+                        @endif
+                    </li>
+                @endforeach
+
             </ul>
         </div>
     </div>
@@ -47,12 +55,12 @@
                         <input type="text" id="filter-price-slider-from" class="pc-filter-price__input"
                                name="price_from" placeholder="от 0" value="{{ $data['price_from'] }}">
                         <input type="text" id="filter-price-slider-to" class="pc-filter-price__input" name="price_to"
-                               placeholder="до 9999" value="{{ $data['price_to'] }}">
+                               placeholder="до 1999" value="{{ $data['price_to'] }}">
                         @else
                             <input type="text" id="filter-price-slider-from" class="pc-filter-price__input"
                                    name="price_from" placeholder="от 0">
                             <input type="text" id="filter-price-slider-to" class="pc-filter-price__input" name="price_to"
-                                   placeholder="до 9999">
+                                   placeholder="до 1999">
                         @endif
                     </div>
                     <div id="filter-price-slider" class="pc-filter-price__slider"></div>
@@ -104,7 +112,10 @@
                     </div>
                     <div class="page-category__products">
 
+
+
                         @foreach($data['products'] as $product)
+
                             <div class="mini-product">
                                 <input type="hidden" name="product_id" value="{{ $product->id }}">
                                 <input type="hidden" name="product_hash" value="{{ $product->hash }}">
@@ -204,9 +215,9 @@
             $("#filter-price-slider").slider({
                 range: true,
                 min: 0,
-                max: 9999,
+                max: 1999,
                 // values: [0, 9999],
-                values: ['{{ $price_from ?? 0 }}','{{ $price_to ?? 9999 }}'],
+                values: ['{{ $price_from ?? 0 }}','{{ $price_to ?? 1999 }}'],
                 slide: function (event, ui) {
                     $("#filter-price-slider-from").val(ui.values[0]);
                     $("#filter-price-slider-to").val(ui.values[1]);

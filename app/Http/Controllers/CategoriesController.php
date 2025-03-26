@@ -32,58 +32,82 @@ class CategoriesController extends MainController
 //        return view('pages/category', compact('data'));
 //    }
     public function index($hash, Request $request){
-//        dd($request);
-
-        $data['category'] = Category::where('hash', $hash)->first();
+        // Получаем категорию
+        $data['category'] = Category::where('hash', $hash)->firstOrFail();
         $this->data['page_title'] = $data['category']->title;
         $this->data['page_description'] = 'Categories';
+
+        //bradcrumbs с подкатегориями
+        $this->data['bradcrumbs'] = [
+            [
+                'is_home'=>true,
+                'title'=>'Главная',
+                'href'=>'/'
+
+            ]
+        ];
+        if(empty($data['category']->top)){
+            $this->data['bradcrumbs'][] = [
+                'is_home'=>false,
+                'title'=>$data['category']->title,
+                'href'=>route('category',$data['category']->hash),
+            ];
+        }else{
+            $cat_top = Category::where('id', $data['category']->top)->first();
+            $this->data['bradcrumbs'][] = [
+                'is_home'=>false,
+                'title'=>$cat_top->title,
+                'href'=>route('category',$cat_top->hash),
+            ];
+            $this->data['bradcrumbs'][] = [
+                'is_home'=>false,
+                'title'=>$data['category']->title,
+                'href'=>route('category',$data['category']->hash),
+            ];
+        }
+
+        // Получаем ID категории и ее подкатегорий
+        $categoryIds = Category::where('id', $data['category']->id)
+            ->orWhere('top', $data['category']->id)
+            ->pluck('id');
+
+        // Фильтры из запроса
         $data['select_filters'] = [];
+        if (!empty($request->filters)) {
+            $data['select_filters'] = array_keys($request->filters);
+        }
+
         $data['order_by'] = $request->get('order_by');
         $data['price_from'] = $request->price_from;
         $data['price_to'] = $request->price_to;
 
-        // price от и до
-        $products = Product::with('filters')->where('categories_id', $data['category']->id)
-                ->when($request->price_from, function ($q, $price_from) {
-                $q->where('price', '>=', $price_from);
-                })
-                ->when($request->price_to, function ($q, $price_to) {
-                    $q->where('price', '<=', $price_to);
-                });
-
-        // фильтры если выбраны
-        if(!empty($request->filters)) {
-            foreach ($request->filters as $key => $value) {
-                $data['select_filters'][] = $key;
-            }
-            $products->whereHas('filters', function ($q) use ($data) {
-                return $q->whereIn('filter_id', $data['select_filters']);
+        // Получение товаров с учетом подкатегорий и фильтров
+        $products = Product::with('filters')
+            ->whereIn('categories_id', $categoryIds)
+            ->when($request->price_from, fn($q) => $q->where('price', '>=', $request->price_from))
+            ->when($request->price_to, fn($q) => $q->where('price', '<=', $request->price_to))
+            ->when(!empty($data['select_filters']), function ($q) use ($data) {
+                $q->whereHas('filters', fn($q) => $q->whereIn('filter_id', $data['select_filters']));
             });
-        }
 
-        //сортировка по убыв и возр
-        if($request->get('order_by') == 'price_increase'){
+        // Сортировка товаров
+        if ($request->get('order_by') === 'price_increase') {
             $products->orderBy('price', 'asc');
-        }else if($request->get('order_by') == 'price_decrease'){
+        } elseif ($request->get('order_by') === 'price_decrease') {
             $products->orderBy('price', 'desc');
         }
 
-        $prod_ids = Product::with('filters')->where('categories_id', $data['category']->id)->select('id')->get();
+        // Получаем ID товаров и фильтры
+        $prod_ids = $products->pluck('id')->toArray();
+        $filters = Filter::with('group')
+            ->whereHas('products', fn($q) => $q->whereIn('products.id', $prod_ids))
+            ->get()
+            ->groupBy('group.title');
 
-        $data['products'] =  $products->paginate(4)->withQueryString();
+        $data['products'] = $products->paginate(12)->withQueryString();
+        $data['filters'] = $filters;
 
-        $filters = [];
-        foreach ($prod_ids as $prod) {
-            foreach ($prod->filters as $f) {
-                if(!in_array($f->id, $filters)){
-                    $filters[] = $f->id;
-                }
-            };
-        }
-
-
-        $data['filters'] = Filter::with('group')->whereIn('id', $filters)->get()->groupBy('group.title');
+//        dd($this->data['bradcrumbs']);
         return view('pages/category', ['data' => $data] + $this->data);
-
     }
 }

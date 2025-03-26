@@ -13,9 +13,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-ui-slider@1.12.1/jquery-ui.min.css">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
 
 
 
@@ -108,11 +113,11 @@
                     @foreach($categories as $category)
                         @if(empty($category->top))
                         <li class="list-cat__list_item">
-                            <a href="{{ $category->hash }}" class="list-cat__list_link">{{ $category->title }}</a>
+                            <a href="{{route('category',$category->hash)}}" class="list-cat__list_link">{{ $category->title }}</a>
 {{--                            Если в категории имеется подкатегория--}}
                             @foreach($categories as $cat)
                                 @if($cat->top == $category->id)
-                                    <a href="" class="list-cat__list_link">- {{ $cat->title }}</a>
+                                    <a href="{{route('category',$cat->hash)}}" class="list-cat__list_link">- {{ $cat->title }}</a>
                                 @endif
                             @endforeach
                         </li>
@@ -174,6 +179,6 @@
 
 </script>
 
-@yield('script')
+@yield('scripts')
 </body>
 </html>

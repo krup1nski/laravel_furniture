@@ -10,16 +10,15 @@
         <div class="footer-category">
             <span class="footer-category__title">Каталог</span>
             <ul class="footer-category__list">
-                <li class="footer-category__item"><a href="" class="footer-category__link">Комоды</a></li>
-                <li class="footer-category__item"><a href="" class="footer-category__link">Мебель для детской</a></li>
-                <li class="footer-category__item"><a href="" class="footer-category__link">Мебель для кухни</a></li>
-                <li class="footer-category__item"><a href="" class="footer-category__link">Пригожие</a></li>
-                <li class="footer-category__item"><a href="" class="footer-category__link">Стенки для гостинной</a></li>
-                <li class="footer-category__item"><a href="" class="footer-category__link">Столы</a></li>
-                <li class="footer-category__item"><a href="" class="footer-category__link">Шкафы</a></li>
-                <li class="footer-category__item"><a href="" class="footer-category__link">Диваны</a></li>
-                <li class="footer-category__item"><a href="" class="footer-category__link">Кресла</a></li>
-                <li class="footer-category__item"><a href="" class="footer-category__link">Пуфы</a></li>
+                @php
+                    $categories = app\Models\Category::all()
+                @endphp
+
+                @foreach($categories as $category)
+                    @if(!$category->top)
+                    <li class="footer-category__item"><a href="{{route('category',$cat->hash)}}" class="footer-category__link">{{ $category->title }}</a></li>
+                    @endif
+                @endforeach
             </ul>
         </div>
         <div class="footer-menu">
