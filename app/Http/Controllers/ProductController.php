@@ -8,7 +8,7 @@ use App\Models\Product;
 use App\Models\ProductOptionGroup;
 use Illuminate\Http\Request;
 
-class ProductController extends Controller
+class ProductController extends MainController
 {
     public function index($hash){
         $product = Product::with('images', 'category', 'options.group', 'filters')->where('hash', $hash)->firstOrFail();

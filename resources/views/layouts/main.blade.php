@@ -6,7 +6,8 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <title>Home</title>
+    <title>@if(isset($page_title)) {{$page_title}} @endif</title>
+
     <meta name="description" content="">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -103,13 +104,24 @@
             </div>
             <div class="list-cat_drop">
                 <ul class="list-cat__list">
+
                     @foreach($categories as $category)
-                        <li class="list-cat__list_item"><a href=""
-                                                           class="list-cat__list_link">{{ $category->title }}</a></li>
+                        @if(empty($category->top))
+                        <li class="list-cat__list_item">
+                            <a href="{{ $category->hash }}" class="list-cat__list_link">{{ $category->title }}</a>
+{{--                            Если в категории имеется подкатегория--}}
+                            @foreach($categories as $cat)
+                                @if($cat->top == $category->id)
+                                    <a href="" class="list-cat__list_link">- {{ $cat->title }}</a>
+                                @endif
+                            @endforeach
+                        </li>
+                        @endif
                     @endforeach
                 </ul>
             </div>
         </div>
+
         <ul class="main-menu__list">
             <li class="main-menu__item"><a href="" class="main-menu__link">Акции</a></li>
             <li class="main-menu__item"><a href="" class="main-menu__link">О фабрике</a></li>
@@ -134,12 +146,32 @@
 <script>
 
     $(document).ready(function () {
-        if (window.location.pathname != '/') {
-            $('.list-cat_drop').hide()
+        let $menu = $('.list-cat_drop');
+        let $toggleBtn = $('.list-cat__main_icon');
+
+        // Скрываем меню, если не на главной
+        if (window.location.pathname !== '/') {
+            $menu.hide();
         }
-        let cart = JSON.parse(localStorage.getItem('cart')) || []; // Добавляем fallback для пустого cart
+
+        // Переключаем меню по клику
+        $toggleBtn.on('click', function (e) {
+            e.stopPropagation();
+            $menu.slideToggle();
+        });
+
+        // Закрываем меню, если кликнули вне него
+        $(document).on('click', function (e) {
+            if (!$menu.is(e.target) && $menu.has(e.target).length === 0 && !$toggleBtn.is(e.target)) {
+                $menu.slideUp();
+            }
+        });
+
+        // Устанавливаем количество товаров в корзине
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
         $('.ml-action_cart__count').text(cart.length);
-    })
+    });
+
 </script>
 
 @yield('script')

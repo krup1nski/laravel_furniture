@@ -12,8 +12,8 @@ class MainController extends Controller
 
     public function __construct()
     {
-        $this->data['title'] = 'hommie';
-        $this->data['description'] = 'ddddddddddddddddddddeeeeeee';
+        $this->data['page_title'] = 'title';
+        $this->data['page_description'] = 'description';
         $this->data['categories'] = Category::all();
     }
 }

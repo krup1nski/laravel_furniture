@@ -35,6 +35,8 @@ class CategoriesController extends MainController
 //        dd($request);
 
         $data['category'] = Category::where('hash', $hash)->first();
+        $this->data['page_title'] = $data['category']->title;
+        $this->data['page_description'] = 'Categories';
         $data['select_filters'] = [];
         $data['order_by'] = $request->get('order_by');
         $data['price_from'] = $request->price_from;
@@ -81,7 +83,7 @@ class CategoriesController extends MainController
 
 
         $data['filters'] = Filter::with('group')->whereIn('id', $filters)->get()->groupBy('group.title');
+        return view('pages/category', ['data' => $data] + $this->data);
 
-        return view('pages/category', compact('data'));
     }
 }

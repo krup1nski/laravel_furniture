@@ -7,7 +7,7 @@ use App\Models\OrderProduct;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
-class CartController extends Controller
+class CartController extends MainController
 {
     public function index(){
         return view('pages/cart');
