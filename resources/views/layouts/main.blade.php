@@ -131,7 +131,7 @@
             <li class="main-menu__item"><a href="" class="main-menu__link">Акции</a></li>
             <li class="main-menu__item"><a href="" class="main-menu__link">О фабрике</a></li>
             <li class="main-menu__item"><a href="" class="main-menu__link">Оплата</a></li>
-            <li class="main-menu__item"><a href="" class="main-menu__link">Производители</a></li>
+            <li class="main-menu__item"><a href="{{route('accessories')}}" class="main-menu__link">Аксессуары</a></li>
             <li class="main-menu__item"><a href="" class="main-menu__link">Сборка</a></li>
             <li class="main-menu__item"><a href="" class="main-menu__link">Доставка</a></li>
             <li class="main-menu__item"><a href="" class="main-menu__link">Контакты</a></li>

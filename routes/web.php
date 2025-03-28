@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccessoriesController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\ProductController;
@@ -12,6 +13,7 @@ Route::get('/category/{hash}', [CategoriesController::class, 'index'])->name('ca
 Route::get('/product/{hash}', [ProductController::class, 'index'])->name('product');
 Route::get('/cart', [CartController::class, 'index'])->name('cart');
 Route::get('/cart/thanks', [CartController::class, 'thanks'])->name('thanks');
+Route::get('/accessories', [AccessoriesController::class, 'index'])->name('accessories');
 
 Route::post('/cart/order', [CartController::class, 'order'])->name('cart-order');
 

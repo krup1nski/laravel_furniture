@@ -13,6 +13,10 @@ class Product extends Model
     {
         return $this->belongsToMany(Filter::class, 'product_filters');
     }
+    public function accessories(): BelongsToMany
+    {
+        return $this->belongsToMany(Accessory::class);
+    }
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class, 'categories_id');

@@ -1348,5 +1348,97 @@ body{
     display: flex;
     align-items: center;
 }
+.page-product-main-dop__item{
+    display: flex !important;
 
-/*1.19.01*/
+}
+.page-product-main-dop__action{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.page-product-main-dop_item_title{
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--text);
+}
+.page-product-main-dop__info{
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.page-product-main-dop__img{
+    height: 70px;
+    width: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.page-product-main-dop__img img{
+    max-width: 100%;
+}
+.page-product-main-dop__add{
+    width: 20px;
+    height: 20px;
+    background-color: var(--gray);
+    color: var(--text);
+    font-weight: 600;
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.page-product-main-dop__item.active_add .page-product-main-dop__add{
+    width: 20px;
+    height: 20px;
+    background-color: var(--accent);
+    color: #fff;
+    font-weight: 600;
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+
+/*----------------Аксессуары----------------*/
+.page-accessories{
+    padding-bottom: 80px;
+}
+.page-accessories__items{
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    margin-top: 30px;
+}
+.page-accessories__item{
+    display: flex;
+    align-items: center;
+    border: 2px solid var(--gray);
+    padding: 20px 30px;
+}
+.page-accessories__item_img{
+    width: 70px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+}
+.page-accessories__item_img img{
+    max-width: 100%;
+}
+.page-accessories__item_title{
+    font-size: 14px;
+}
+.page-accessories__item_price{
+    display: block;
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+/*2/11/07*/

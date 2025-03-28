@@ -86,6 +86,25 @@
 
                     <div class="page-product-main-dop">
                         <span class="page-product-main-dop__title">Аксессуары</span>
+                        <div class="swiper page-product-main-dop__items">
+                            <div class="swiper-wrapper">
+                                @foreach($product->accessories as $accessory)
+                                    <div class="swiper-slide page-product-main-dop__item" data-accessory-id="{{ $accessory->id }}">
+                                        <div class="page-product-main-dop__img">
+                                            <img src="{{ $accessory->image }}" alt="">
+                                        </div>
+                                        <div class="page-product-main-dop__info">
+                                            <span class="page-product-main-dop_item_title">{{ $accessory->name }}</span>
+                                            <div class="page-product-main-dop__action">
+                                                <span
+                                                    class="page-product-main-dop__price">{{ $accessory->price }} byn</span>
+                                                <div class="page-product-main-dop__add">+</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
                     </div>
                     <div class="page-product-main-action">
 
@@ -98,13 +117,20 @@
 
 
                         <div class="page-product-main-action__price">
+                            @if($product->sale)
                             <div class="page-product-main-action__price_main">
-                                <span class="page-product-main-action__price_old">54000</span>
-                                <span class="page-product-main-action__price_current">{{ $product->price }}</span>
+                                <span class="page-product-main-action__price_old">{{ $product->price }}</span>
+                                <span class="page-product-main-action__price_current">{{ $product->price-($product->price*$product->sale/100) }}</span>
                             </div>
                             <div class="page-product-main-action__price_sale">
-                                <div class="page-product-main-action__price_sale-count">-10%</div>
+                                <div class="page-product-main-action__price_sale-count">-{{ $product->sale }}%</div>
                             </div>
+                            @else
+                                <div class="page-product-main-action__price_main">
+                                    <span class="page-product-main-action__price_old"></span>
+                                    <span class="page-product-main-action__price_current">{{ $product->price }}</span>
+                                </div>
+                            @endif
                         </div>
                         <div class="page-product-main-action__wrap">
                             <div class="page-product-main-action__count">
@@ -173,9 +199,14 @@
 
 @endsection
 
-@section('script')
+@section('scripts')
     <script>
         $(document).ready(function (){
+
+            $('.page-product-main-dop__add').on('click', function (){
+                $(this).parents('.page-product-main-dop__item').toggleClass('active_add')
+            })
+
             //Описание-Характеристики-Отзывы-Гарантия
             $('.page-product-info__tabs_item').on('click', function (e){
                 e.preventDefault()
@@ -235,6 +266,11 @@
                 }
 
 
+                let accessories = [];
+                $('.page-product-main-dop__item.active_add').each(function (){
+                    accessories.push($(this).attr('data-accessory-id'))
+                })
+
                 let product = {
                     product_id: id,
                     product_title: title,
@@ -243,6 +279,7 @@
                     product_img: img_path,
                     product_hash: product_hash,
                     product_options: options,
+                    accessories: accessories,
                 };
                 let cart = JSON.parse(localStorage.getItem('cart')) || [];
                 let match = false;
@@ -263,4 +300,18 @@
             })
         })
     </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        const acc_carousel = new Swiper('.page-product-main-dop__items', {
+            loop: false,
+            slidesPerView: 3,
+            spaceBetween:0,
+            pagination: {
+                el: '.swiper-wrapper-pagination',
+            },
+        });
+    </script>
+
+
 @endsection

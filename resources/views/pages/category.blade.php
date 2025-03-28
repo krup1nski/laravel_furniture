@@ -199,7 +199,7 @@
 
 @endsection
 
-@section('script')
+@section('scripts')
     <script src="https://cdn.jsdelivr.net/npm/jquery-ui-slider@1.12.1/jquery-ui.min.js"></script>
 
     <script>
