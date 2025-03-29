@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\FilterGroup;
+use App\Models\Option;
 use App\Models\Product;
-use App\Models\ProductOptionGroup;
+use App\Models\OptionGroup;
 use Illuminate\Http\Request;
 
 class ProductController extends MainController
@@ -14,10 +15,9 @@ class ProductController extends MainController
         $product = Product::with('images', 'category', 'options.group', 'filters', 'accessories')
             ->where('hash', $hash)
             ->firstOrFail();
-
-        $grouppp = ProductOptionGroup::all();
         $filters_group = FilterGroup::all();
-        return view('pages/product', compact('product', 'grouppp', 'filters_group'));
+        $options_group = OptionGroup::get();
+        return view('pages/product', compact('product', 'filters_group', 'options_group'));
 
     }
 }

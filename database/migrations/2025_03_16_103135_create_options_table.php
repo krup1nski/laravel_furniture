@@ -13,8 +13,14 @@ return new class extends Migration
     {
         Schema::create('options', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('group_id');
             $table->string('title');
             $table->string('image_path')->nullable();
+
+            $table->foreign('group_id')
+                ->references('id')
+                ->on('option_group')
+                ->onDelete('cascade');
         });
     }
 

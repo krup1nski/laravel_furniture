@@ -70,15 +70,21 @@
                         </div>
                     </div>
 
-                    @foreach($product->options->groupBy('option_group_id') as $key => $group)
+                    @foreach($product->options->groupBy('group_id') as $key => $group)
                     <div class="page-product-main-options">
-                        <span class="page-product-main-options__title">{{ $grouppp->where('id', $key)->first()->title }}</span>
-                        <div class="page-product-main-options__items">
-                            @foreach($group as $option)
-                            <div class="page-product-main-options__item " data-option-group-id="{{ $key }}" data-option-id="{{ $option->id }}" data-option-title="{{ $option->title }}">
-                                <img src="{{ asset($option->image) }}" alt="{{ $option->title }}">
+                        <div class="page-product-main-options-item">
+                            <span class="page-product-main-options__title">{{ $options_group->where('id', $key)->first()->title }}</span>
+                            <div class="page-product-main-options__items">
+                                @foreach($group as $option)
+                                <div class="page-product-main-options__item  @if(!empty($option->image_path)) with_img @endif" data-option-group-id="{{ $key }}" data-option-id="{{ $option->id }}" data-option-title="{{ $option->title }}">
+                                    @if(!empty($option->image_path))
+                                    <img src="{{ asset($option->image_path) }}" alt="{{ $option->title }}">
+                                    @else
+                                        <span class="without_img">{{ $option->title }}</span>
+                                    @endif
+                                </div>
+                                @endforeach
                             </div>
-                            @endforeach
                         </div>
                     </div>
                     @endforeach
@@ -240,10 +246,15 @@
             })
 
             //выбор цвета
-            $('.page-product-main-options__item:first-child').addClass('active')
+
             $('.page-product-main-options__item').on('click', function (){
-                $('.page-product-main-options__item').removeClass('active')
-                $(this).addClass('active')
+                if($(this).hasClass('active')){
+                    $(this).removeClass('active')
+                }else{
+                    $(this).parents('.page-product-main-options__items').find('.page-product-main-options__item').removeClass('active')
+                    $(this).addClass('active')
+                }
+
             })
 
             // In cart
@@ -256,13 +267,19 @@
                 let product_hash = $('input[name="product_hash"]').val();
                 let with_options = $('input[name="with_options"]').val();
 
-                let options = {}
+                let options = []
                 if(with_options){
-                    options = {
-                        option_group_id: $('.page-product-main-options__item.active').attr('data-option-group-id'),
-                        option_id: $('.page-product-main-options__item.active').attr('data-option-id'),
-                        option_title: $('.page-product-main-options__item.active').attr('data-option-title'),
-                    }
+                    $('.page-product-main-options .page-product-main-options-item').each(function (){
+                        if($(this).find('.page-product-main-options__item.active').length){
+                            options.push({
+                                option_group_id: $(this).find('.page-product-main-options__item.active').attr('data-option-group-id'),
+                                option_id: $(this).find('.page-product-main-options__item.active').attr('data-option-id'),
+                                option_title: $(this).find('.page-product-main-options__item.active').attr('data-option-title'),
+                            })
+                        }
+
+                    })
+
                 }
 
 

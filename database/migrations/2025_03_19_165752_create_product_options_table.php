@@ -11,23 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('product_options', function (Blueprint $table) {
+        Schema::create('option_product', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('product_id');
-            $table->unsignedBigInteger('option_group_id');
-            $table->string('title');
-            $table->string('image')->nullable();
-            $table->integer('price')->nullable();
-            $table->integer('sort')->default(0);
+            $table->unsignedBigInteger('option_id');
 
             $table->foreign('product_id')
                 ->references('id')
                 ->on('products')
                 ->onDelete('cascade');
 
-            $table->foreign('option_group_id')
+            $table->foreign('option_id')
                 ->references('id')
-                ->on('product_option_group')
+                ->on('options')
                 ->onDelete('cascade');
         });
     }

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('product_option_group', function (Blueprint $table) {
+        Schema::create('option_groups', function (Blueprint $table) {
             $table->id();
             $table->string('title');
             $table->integer('sort');

@@ -882,10 +882,18 @@ body{
 }
 .page-product-main-options__item{
     margin-right: 5px;
+
+}
+.with_img{
     width: 50px;
     height: 50px;
     overflow: hidden;
 }
+.without_img{
+    padding: 5px;
+    margin: 5px;
+}
+
 .page-product-main-options__item.active{
     border: 2px solid var(--accent);
 }
