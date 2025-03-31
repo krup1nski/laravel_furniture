@@ -233,7 +233,9 @@
                 let img_path = $(this).parents('.mini-product').find('.mini-product__img img').attr('src');
                 let product_hash = $(this).parents('.mini-product').find('input[name="product_hash"]').val();
 
+
                 let product = {
+                    id: id,
                     product_id: id,
                     product_title: title,
                     count: 1,
@@ -241,6 +243,7 @@
                     product_img: img_path,
                     product_hash: product_hash,
                     product_options: [],
+                    accessories: [],
                 };
 
                 let cart = JSON.parse(localStorage.getItem('cart')) || [];

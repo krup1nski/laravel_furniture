@@ -9,6 +9,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Product extends Model
 {
+//    protected $fillable = [
+//
+//    ];
     public function filters(): BelongsToMany
     {
         return $this->belongsToMany(Filter::class, 'product_filters');
