@@ -10,7 +10,7 @@ class HomeController extends MainController
 {
     public function index(){
         $categories = Category::withCount('products')->get();
-//        dd($categories);
-        return view('pages/home', compact('categories'));
+        $sales = Product::where('sale', '>', 0)->get();
+        return view('pages/home', compact('categories', 'sales'));
     }
 }

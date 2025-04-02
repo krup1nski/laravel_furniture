@@ -19,13 +19,17 @@
 
     <div class="container">
         <h1 class="page-title">Спасибо за ваш заказ!</h1>
+        <div>
+
+            <p>Ваш заказ №{{ session()->get('order_id') }} успешно сформирован</p>
+        </div>
     </div>
 @endsection
 
 @section('scripts')
     <script>
         $(document).ready(function (){
-
+            localStorage.clear();
         })
     </script>
 @endsection

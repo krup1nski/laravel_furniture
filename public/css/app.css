@@ -326,6 +326,7 @@ body{
 .categories__item{
     text-align: center;
     min-width: 300px;
+    margin-bottom: 40px;
 }
 
 .categories__item_icon{
@@ -1486,4 +1487,48 @@ body{
     margin-bottom: 20px;
 }
 
-/*4/07/12*/
+/*notifications*/
+
+.notifications{
+    position: fixed;
+    top: 80px;
+    right: 30px;
+    z-index: 9;
+}
+.notifications__item{
+    display: flex;
+    align-items: center;
+    width: 400px;
+    padding: 15px 50px 15px 30px;
+    font-size: 14px;
+    position: relative;
+    border: 2px solid var(--gray);
+    background: var(--gray-l);
+    margin-bottom: 10px;
+    transform: translateX(0px);
+    opacity: 1;
+    visibility: visible;
+    transition: 0.25s ease;
+}
+.notifications__item.hide{
+    transform: translateX(100px);
+    opacity: 0;
+    visibility: hidden;
+}
+.notifications__item_close{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+.notifications__item_icon{
+    margin-right: 15px;
+    color: var(--accent);
+}
+.notifications__item_link{
+    color: var(--accent);
+}
+.notifications__item_info{
+    display: flex;
+    flex-direction: column;
+}

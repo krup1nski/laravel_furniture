@@ -17,7 +17,7 @@ class CartController extends MainController
         $this->data['deliveries'] = Delivery::all();
         return view('pages/cart', $this->data);
     }
-    public function thanks(){
+    public function thanks(Request $request){
         return view('pages/thanks');
     }
 
@@ -41,6 +41,7 @@ class CartController extends MainController
             'price'=>$total,
 
         ]);
+        $order_id = $order->id;
 
         foreach ($cart as $c){
             $product = Product::find($c->product_id);
@@ -74,7 +75,11 @@ class CartController extends MainController
 
         }
 
-        return redirect()->route('thanks')->with(['cart' => $cart]);
+        return redirect()->route('thanks')->with([
+            'cart' => $cart,
+            'order_id' => $order_id
+        ]);
+
     }
 
 }

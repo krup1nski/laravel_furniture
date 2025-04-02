@@ -2,6 +2,10 @@
 
 @section('content')
 
+    <div class="notifications">
+
+    </div>
+
     <div class="breadcrumbs">
         <div class="container">
             <ul class="breadcrumbs__list">
@@ -260,6 +264,34 @@
                     cart.push(product); // Добавляем новый товар, если его еще нет
                 }
                 $('.ml-action_cart__count').text(cart.length)
+
+
+                let time = Date.now()
+                let notification = `
+                <div class="notifications__item hide" data-id="${time}">
+                    <div class="notifications__item_close">
+                        <i class="fa-solid fa-xmark"></i>
+                    </div>
+                    <div class="notifications__item_icon">
+                        <i class="fa-solid fa-check"></i>
+                    </div>
+                    <div class="notifications__item_info">
+                        <span class="notifications__item_text"><strong>${title}</strong> добавлен в корзину</span>
+                        <a href="{{ route('cart') }}" class="notifications__item_link">Открыть корзину</a>
+                    </div>
+                </div>`
+                $('.notifications').append(notification)
+                setTimeout(function () {
+                    $('.notifications__item[data-id="'+ time +'"]').removeClass('hide')
+                }, 10)
+
+                setTimeout(function (){
+                    $('.notifications__item[data-id="'+ time +'"]').addClass('hide')
+                    setTimeout(function (){
+                        $('.notifications__item[data-id="'+ time +'"]').remove()
+                    }, 250)
+                }, 5000)
+
                 localStorage.setItem('cart', JSON.stringify(cart));
             });
         })

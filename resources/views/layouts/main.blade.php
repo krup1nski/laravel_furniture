@@ -27,6 +27,9 @@
 </head>
 <body>
 
+
+
+
 @php
     $categories = app\Models\Category::all()
 @endphp
