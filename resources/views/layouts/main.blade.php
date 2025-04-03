@@ -85,7 +85,9 @@
                 <i class="fa-solid fa-equals"></i>
             </div>
             <div class="ml-action_like">
-                <i class="fa-solid fa-heart"></i>
+                <a href="{{ route('wishlist') }}">
+                    <i class="fa-solid fa-heart"></i>
+                </a>
             </div>
             <div class="ml-action_cart">
                 <span class="ml-action_cart__count">0</span>

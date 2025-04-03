@@ -385,6 +385,11 @@ body{
 }
 .mini-product__compare{
     margin-right: 15px;
+    cursor: pointer;
+}
+.mini-product__like.active{
+    color: var(--accent);
+    cursor: pointer;
 }
 .mini-product__buy{
     position: absolute;
@@ -1531,4 +1536,23 @@ body{
 .notifications__item_info{
     display: flex;
     flex-direction: column;
+}
+
+/*---------Wishlist----------*/
+.page-top{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.likes-clear{
+    font-size: 14px;
+    color: var(--gray);
+}
+.page-likes{
+    padding-bottom: 80px;
+}
+.page-likes__items{
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    margin-top: 60px;
 }

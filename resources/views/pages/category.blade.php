@@ -209,6 +209,10 @@
     <script>
         $(document).ready(function (){
 
+            $('.mini-product__like').on('click', function (){
+                $(this).addClass('active')
+            })
+
             // при выборе варианта сортировки добавляем его в форму
             $('select[name="order_by"]').on('change', function (){
                 $('.pc-filter input[name="order_by"]').val($(this).val())
