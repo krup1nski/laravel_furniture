@@ -48,7 +48,7 @@
                         <h4 class="categories__item_title">
                             <a href="{{route('category',$category->hash)}}">{{$category->title}}</a>
                         </h4>
-                        <div class="categories__item_count">{{$category->products_count}}</div>
+                        <div class="categories__item_count">{{$category->products_count}} шт.</div>
                     </div>
                     @endif
                 @endforeach

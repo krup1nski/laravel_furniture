@@ -155,7 +155,7 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script>
 
-    window.addNotification = (title) => {
+    window.addNotification = (title, link) => {
         let time = Date.now()
         let notification = `
                 <div class="notifications__item hide" data-id="${time}">
@@ -167,7 +167,7 @@
                     </div>
                     <div class="notifications__item_info">
                         <span class="notifications__item_text"><strong>${title}</strong> добавлен в корзину</span>
-                        <a href="{{ route('cart') }}" class="notifications__item_link">Открыть корзину</a>
+                        <a href="${link}" class="notifications__item_link">Открыть корзину</a>
                     </div>
                 </div>`
         $('.notifications').append(notification)
@@ -183,46 +183,139 @@
         }, 5000)
     }
 
-    window.addMiniProductToStorage = (name, _this) => {
-        let title = _this.parents('.mini-product').find('.mini-product__title').text().trim();
-        let price = _this.parents('.mini-product').find('.mini-product__price_current').text().trim().replace(' BYN', '');
-        let img_path = _this.parents('.mini-product').find('.mini-product__img img').attr('src');
-        let product_hash = _this.parents('.mini-product').find('input[name="product_hash"]').val();
+    window.addToCart = (product) => {
+        let result
+        let cart = JSON.parse(localStorage.getItem('cart'))
 
+        if(cart == null){
+            result = [product]
+        }else{
+            let match = false
+            let options_ids = product.product_options.map(item => item.option_id)
+            cart.map(cart_item =>{
+                if(cart_item.product_id == product.product_id){
+                    if(cart_item.product_options.length || product.product_options.length){
+                        let cart_item_options_ids = []
+                        cart_item.product_options.forEach(cart_item_option =>{
+                            cart_item_options_ids.push(cart_item_option.option_id)
+                        })
+                        let option_math = false;
+                        if(cart_item_options_ids.length && options_ids.length && cart_item_options_ids.toSorted() === options_ids.toSorted()) option_math = true
 
-        let product = {
-            id: id,
-            product_id: id,
-            product_title: title,
-            count: 1,
-            product_price: price,
-            product_img: img_path,
-            product_hash: product_hash,
-            product_options: [],
-            accessories: [],
-        };
-
-        let cart = JSON.parse(localStorage.getItem(name)) || [];
-        let match = false;
-
-        cart.forEach(item => {
-            if (item.product_id == product.product_id) {
-                item.count += 1; // Увеличиваем количество, если товар уже есть в корзине
-                match = true;
+                        if(option_math){
+                            match = true
+                            return cart_item.count = Number(cart_item.count) + Number(product.count)
+                        }
+                    }else{
+                        match = true
+                        return cart_item.count = Number(cart_item.count) + Number(product.count)
+                    }
+                }
+            })
+            if(match){
+                result = cart
+            }else{
+                result = [...cart, product]
             }
-        });
-
-        if (!match) {
-            cart.push(product); // Добавляем новый товар, если его еще нет
         }
-        $('.ml-action_cart__count').text(cart.length)
 
 
-        window.addNotification(product.product_title)
+        $('.ml-action_cart__count').text(result.length)
 
-        localStorage.setItem(name, JSON.stringify(cart));
+
+        window.addNotification(product.product_title, '{{ route('cart') }}')
+
+        localStorage.setItem('cart', JSON.stringify(result));
     }
 
+    window.toggleToLike = (product) => {
+        let result
+        let wishlist = JSON.parse(localStorage.getItem('wishlist'))
+
+        if(wishlist == null){
+            result = [product]
+        }else{
+            if(wishlist.filter(item => item.product_id == product.product_id).length){
+                result = wishlist.filter(item => {
+                    if(item.product_id != product.product_id){
+                        return item
+                    }
+                })
+            }else{
+                result = [...wishlist, product]
+            }
+        }
+        localStorage.setItem('wishlist', JSON.stringify(result));
+    }
+
+    window.toggleToCompare = (product) => {
+        let result
+        let compare = JSON.parse(localStorage.getItem('compare'))
+
+        if(compare == null){
+            result = [product]
+        }else{
+            if(compare.filter(item => item.product_id == product.product_id).length){
+                result = compare.filter(item => {
+                    if(item.product_id != product.product_id){
+                        return item
+                    }
+                })
+            }else{
+                result = [...compare, product]
+            }
+        }
+        localStorage.setItem('compare', JSON.stringify(result));
+    }
+
+    window.miniProductBuyHandler = (_this) => {
+        let id = _this.parents('.mini-product').find('input[name="product_id"]').val();
+        let title = _this.parents('.mini-product').find('input[name="product_title"]').val();
+        let price = _this.parents('.mini-product').find('input[name="product_price"]').val();
+        let sale = _this.parents('.mini-product').find('input[name="product_sale"]').val();
+        let img_path = _this.parents('.mini-product').find('input[name="product_img"]').val();
+        let hash = _this.parents('.mini-product').find('input[name="product_hash"]').val();
+
+        let product = {
+            id: Number(id),
+            product_id: id,
+            product_title: title,
+            product_img: img_path,
+            product_price: price,
+            product_sale: sale,
+            product_hash: hash,
+            count: 1,
+            product_options: [],
+            accessories: []
+        }
+        _this.addClass('active')
+        window.addToCart(product)
+    }
+    window.miniProductLikeHandler = (_this) => {
+        let id = _this.parents('.mini-product').find('input[name="product_id"]').val();
+        let title = _this.parents('.mini-product').find('input[name="product_title"]').val();
+        let price = _this.parents('.mini-product').find('input[name="product_price"]').val();
+        let sale = _this.parents('.mini-product').find('input[name="product_sale"]').val();
+        let img_path = _this.parents('.mini-product').find('input[name="product_img"]').val();
+        let hash = _this.parents('.mini-product').find('input[name="product_hash"]').val();
+
+        let product = {
+            id: Number(id),
+            product_id: id,
+            product_title: title,
+            product_img: img_path,
+            product_price: price,
+            product_sale: sale,
+            product_hash: hash,
+            count: 1,
+            product_options: [],
+            accessories: []
+        }
+        _this.toggleClass('active')
+        window.toggleToLike(product)
+    }
+
+    //выпадающий список категорий
     $(document).ready(function () {
         let $menu = $('.list-cat_drop');
         let $toggleBtn = $('.list-cat__main_icon');

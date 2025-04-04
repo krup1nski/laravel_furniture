@@ -119,10 +119,16 @@
 
 
                         @foreach($data['products'] as $product)
-
+{{--                            @dd($product)--}}
                             <div class="mini-product">
                                 <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                <input type="hidden" name="product_title" value="{{ $product->title }}">
                                 <input type="hidden" name="product_hash" value="{{ $product->hash }}">
+                                <input type="hidden" name="product_price" value="{{ $product->price }}">
+                                <input type="hidden" name="product_sale" value="{{ $product->sale }}">
+                                <input type="hidden" name="product_img" value="{{ $product->image_path }}">
+
+
                                 <div class="mini-product__top">
                                     <div class="mini-product__stock">
                                         @if(!empty($product->quantity))
@@ -209,12 +215,22 @@
     <script>
         $(document).ready(function (){
 
-            // Для всех товаров в корзине добавляем класс active
-            let wishlist = JSON.parse(localStorage.getItem('wishlist'))
+
+            let cart = JSON.parse(localStorage.getItem('cart')) || []
+            let wishlist = JSON.parse(localStorage.getItem('wishlist')) || []
+            let compare = JSON.parse(localStorage.getItem('compare')) || []
+
+// Для всех товаров в корзине добавляем класс active
             $('.mini-product').each(function (){
                 let id = $(this).find('input[name="product_id"]').val()
                 if(wishlist && wishlist.filter(item => item.product_id == id).length){
                     $(this).find('.mini-product__like').addClass('active')
+                }
+                if(cart && cart.filter(item => item.product_id == id).length){
+                    $(this).find('.mini-product__buy').addClass('active')
+                }
+                if(compare && compare.filter(item => item.product_id == id).length){
+                    $(this).find('.mini-product__compare').addClass('active')
                 }
             })
 
@@ -241,23 +257,12 @@
 
             //добавление товара в локалсторэдж
             $('.mini-product__buy').on('click', function () {
-                window.addMiniProductToStorage('cart', $(this))
-            });
+                window.miniProductBuyHandler($(this))
+            })
+
+
             $('.mini-product__like').on('click', function (){
-
-                let id = $(this).parents('.mini-product').find('input[name="product_id"]').val();
-                let wishlist = JSON.parse(localStorage.getItem('wishlist'))
-
-                // Если есть товар в корзине
-                if(wishlist && wishlist.filter(item => item.product_id == id).length){
-                    wishlist = wishlist.filter(item => item.id != id);
-                    localStorage.setItem('wishlist', JSON.stringify(wishlist));
-                    $(this).removeClass('active')
-                }else{//Если нет товара в wishlist - добавляем
-                    $(this).addClass('active')
-                    window.addMiniProductToStorage('wishlist', $(this))
-                }
-
+                window.miniProductLikeHandler($(this))
             })
         })
     </script>

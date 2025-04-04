@@ -265,21 +265,21 @@
                 let img_path = $('input[name="product_img"]').val();
                 let count = $('input[name="count"]').val();
                 let product_hash = $('input[name="product_hash"]').val();
-                let with_options = $('input[name="with_options"]').val();
 
                 let options = [];
-                if (with_options) {
+                let options_ids = [];
+
                     $('.page-product-main-options .page-product-main-options-item').each(function () {
-                        let activeOption = $(this).find('.page-product-main-options__item.active');
-                        if (activeOption.length) {
+                        if($(this).find('.page-product-main-options__item.active').length){
+                            options_ids.push($(this).find('.page-product-main-options__item.active').attr('data-option-id'))
                             options.push({
-                                option_group_id: activeOption.attr('data-option-group-id'),
-                                option_id: activeOption.attr('data-option-id'),
-                                option_title: activeOption.attr('data-option-title'),
+                                option_group_id: $(this).find('.page-product-main-options__item.active').attr('data-option-group-id'),
+                                option_id: $(this).find('.page-product-main-options__item.active').attr('data-option-id'),
+                                option_title: $(this).find('.page-product-main-options__item.active').attr('data-option-title'),
                             });
                         }
-                    });
-                }
+                    })
+
 
                 let accessories = [];
                 $('.page-product-main-dop__item.active_add').each(function () {
@@ -303,29 +303,14 @@
                     accessories: accessories,
                 };
 
-                let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-                let match = false;
-
-                cart.forEach(cart_item => {
-                    if (cart_item.product_id == product.product_id) {
-                        let cart_option_ids = cart_item.product_options.map(opt => opt.option_id).sort().join(',');
-                        let product_option_ids = product.product_options.map(opt => opt.option_id).sort().join(',');
-
-                        if (cart_option_ids === product_option_ids) {
-                            cart_item.count += product.count;
-                            match = true;
-                        }
-                    }
-                });
-
-                if (!match) {
-                    cart.push(product);
-                }
-
-                $('.ml-action_cart__count').text(cart.length);
-                localStorage.setItem('cart', JSON.stringify(cart));
+                window.addToCart(product)
             });
+
+            let wishlist = JSON.parse(localStorage.getItem('wishlist'))
+            let id = $(this).find('input[name="product_id"]').val()
+            if(wishlist && wishlist.filter(item => item.product_id == id).length){
+                $(this).find('.page-product-main-top__actions_like').addClass('active')
+            }
 
         })
     </script>

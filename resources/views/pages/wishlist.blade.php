@@ -64,7 +64,7 @@
                 <img src="${ item.product_img }" alt="">
                     </div>
 
-                <a href="" class="mini-product__title">${ item.product_title }</a>
+                <a href="/product/${item.product_hash}" class="mini-product__title">${ item.product_title }</a>
 
 
                 <div class="mini-product__rating">
@@ -78,10 +78,10 @@
 
                         <div class="mini-product__price_main">
                             <span class="mini-product__price_old">${ item.product_price } BYN</span>
-                                <span class="mini-product__price_current">${ item.price-(item.price*item.sale/100) } BYN</span>
+                                <span class="mini-product__price_current">${ item.product_price-(item.product_price*item.product_sale/100) } BYN</span>
                             </div>
                             <div class="mini-product__price_sale">
-                                <div class="mini-product__price_sale-count">-${ item.sale }%</div>
+                                <div class="mini-product__price_sale-count">-${ item.product_sale }%</div>
                             </div>
 
 
@@ -100,6 +100,32 @@
                 `
             })
             $('.page-likes__items').html(output)
+
+            let cart = JSON.parse(localStorage.getItem('cart')) || []
+            let compare = JSON.parse(localStorage.getItem('compare')) || []
+
+// Для всех товаров в корзине добавляем класс active
+            $('.mini-product').each(function (){
+                let id = $(this).find('input[name="product_id"]').val()
+                if(wishlist && wishlist.filter(item => item.product_id == id).length){
+                    $(this).find('.mini-product__like').addClass('active')
+                }
+                if(cart && cart.filter(item => item.product_id == id).length){
+                    $(this).find('.mini-product__buy').addClass('active')
+                }
+                if(compare && compare.filter(item => item.product_id == id).length){
+                    $(this).find('.mini-product__compare').addClass('active')
+                }
+            })
+
+            $('.mini-product__buy').on('click', function (){
+                window.miniProductBuyHandler($(this))
+            })
+
+            $('.mini-product__like').on('click', function (){
+                window.miniProductLikeHandler($(this))
+            })
+
         })
     </script>
 
