@@ -26,73 +26,82 @@
             </div>
 
             <div class="page-likes__items">
-
-                @foreach($products as $product)
-                <div class="mini-product">
-                    <input type="hidden" name="product_id" value="{{ $product->id }}">
-                    <input type="hidden" name="product_hash" value="{{ $product->hash }}">
-                    <div class="mini-product__top">
-                        <div class="mini-product__stock">
-                            @if(!empty($product->quantity))
-                                {{ $product->quantity }} шт.
-                            @else
-                                Нет в наличии
-                            @endif
-                        </div>
-                        <div class="mini-product__action">
-                            <div class="mini-product__compare">
-                                <i class="fa-solid fa-equals"></i>
-                            </div>
-                            <div class="mini-product__like">
-                                <i class="fa-solid fa-heart"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mini-product__img">
-                        {{--                                <img src="{{ asset('images/komod.jpg') }}" alt="">--}}
-                        <img src="{{ $product->image_path }}" alt="">
-                    </div>
-                    @if(!empty($product->quantity))
-                        <a href="{{ route('product', $product->hash) }}" class="mini-product__title">{{ $product->title }}</a>
-                    @else
-                        <a href="" class="mini-product__title_out">{{ $product->title }}</a>
-                    @endif
-
-                    <div class="mini-product__rating">
-                        <div class="mini-product__rating_icon">
-                            <i class="fa-solid fa-star"></i>
-                        </div>
-                        <span class="mini-product__rating_text">4.7</span>
-                    </div>
-                    <div class="mini-product__price">
-
-
-                            <div class="mini-product__price_main">
-                                <span class="mini-product__price_old">{{ $product->price }} BYN</span>
-                                <span class="mini-product__price_current">{{ $product->price-($product->price*$product->sale/100) }} BYN</span>
-                            </div>
-                            <div class="mini-product__price_sale">
-                                <div class="mini-product__price_sale-count">-{{ $product->sale }}%</div>
-                            </div>
-
-
-                    </div>
-                    @if(!empty($product->quantity))
-                        <div class="mini-product__buy">
-                            <i class="fa-solid fa-cart-shopping"></i>
-                        </div>
-                    @else
-                        <div class="mini-product__not-buy">
-                            <i class="fa-solid fa-cart-shopping"></i>
-                        </div>
-                    @endif
-
-                </div>
-                @endforeach
-
+{{--                Здесь товары из wishlist из LocalStorage     --}}
             </div>
         </div>
     </div>
+
+@endsection
+
+@section('scripts')
+    <script>
+        $(document).ready(function (){
+            let output = ``
+            let wishlist = JSON.parse(localStorage.getItem('wishlist'))
+            wishlist.forEach(item => {
+                output +=  `
+                <div class="mini-product">
+                    <input type="hidden" name="product_id" value="${ item.id }">
+                    <input type="hidden" name="product_hash" value="${ item.product_hash }">
+                    <div class="mini-product__top">
+{{--                        <div class="mini-product__stock">--}}
+{{--                            @if(!empty($product->quantity))--}}
+{{--                {{ $product->quantity }} шт.--}}
+{{--                            @else--}}
+{{--                Нет в наличии--}}
+{{--@endif--}}
+{{--                </div>--}}
+                <div class="mini-product__action">
+                    <div class="mini-product__compare">
+                        <i class="fa-solid fa-equals"></i>
+                    </div>
+                    <div class="mini-product__like">
+                        <i class="fa-solid fa-heart"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="mini-product__img">
+                <img src="${ item.product_img }" alt="">
+                    </div>
+
+                <a href="" class="mini-product__title">${ item.product_title }</a>
+
+
+                <div class="mini-product__rating">
+                    <div class="mini-product__rating_icon">
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <span class="mini-product__rating_text">4.7</span>
+                </div>
+                <div class="mini-product__price">
+
+
+                        <div class="mini-product__price_main">
+                            <span class="mini-product__price_old">${ item.product_price } BYN</span>
+                                <span class="mini-product__price_current">${ item.price-(item.price*item.sale/100) } BYN</span>
+                            </div>
+                            <div class="mini-product__price_sale">
+                                <div class="mini-product__price_sale-count">-${ item.sale }%</div>
+                            </div>
+
+
+                    </div>
+{{--                    @if(!empty($product->quantity))--}}
+{{--                <div class="mini-product__buy">--}}
+{{--                    <i class="fa-solid fa-cart-shopping"></i>--}}
+{{--                </div>--}}
+{{--@else--}}
+{{--                <div class="mini-product__not-buy">--}}
+{{--                    <i class="fa-solid fa-cart-shopping"></i>--}}
+{{--                </div>--}}
+{{--@endif--}}
+
+                </div>
+                `
+            })
+            $('.page-likes__items').html(output)
+        })
+    </script>
 
 @endsection
 

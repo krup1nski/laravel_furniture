@@ -155,6 +155,74 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script>
 
+    window.addNotification = (title) => {
+        let time = Date.now()
+        let notification = `
+                <div class="notifications__item hide" data-id="${time}">
+                    <div class="notifications__item_close">
+                        <i class="fa-solid fa-xmark"></i>
+                    </div>
+                    <div class="notifications__item_icon">
+                        <i class="fa-solid fa-check"></i>
+                    </div>
+                    <div class="notifications__item_info">
+                        <span class="notifications__item_text"><strong>${title}</strong> добавлен в корзину</span>
+                        <a href="{{ route('cart') }}" class="notifications__item_link">Открыть корзину</a>
+                    </div>
+                </div>`
+        $('.notifications').append(notification)
+        setTimeout(function () {
+            $('.notifications__item[data-id="'+ time +'"]').removeClass('hide')
+        }, 10)
+
+        setTimeout(function (){
+            $('.notifications__item[data-id="'+ time +'"]').addClass('hide')
+            setTimeout(function (){
+                $('.notifications__item[data-id="'+ time +'"]').remove()
+            }, 250)
+        }, 5000)
+    }
+
+    window.addMiniProductToStorage = (name, _this) => {
+        let title = _this.parents('.mini-product').find('.mini-product__title').text().trim();
+        let price = _this.parents('.mini-product').find('.mini-product__price_current').text().trim().replace(' BYN', '');
+        let img_path = _this.parents('.mini-product').find('.mini-product__img img').attr('src');
+        let product_hash = _this.parents('.mini-product').find('input[name="product_hash"]').val();
+
+
+        let product = {
+            id: id,
+            product_id: id,
+            product_title: title,
+            count: 1,
+            product_price: price,
+            product_img: img_path,
+            product_hash: product_hash,
+            product_options: [],
+            accessories: [],
+        };
+
+        let cart = JSON.parse(localStorage.getItem(name)) || [];
+        let match = false;
+
+        cart.forEach(item => {
+            if (item.product_id == product.product_id) {
+                item.count += 1; // Увеличиваем количество, если товар уже есть в корзине
+                match = true;
+            }
+        });
+
+        if (!match) {
+            cart.push(product); // Добавляем новый товар, если его еще нет
+        }
+        $('.ml-action_cart__count').text(cart.length)
+
+
+        window.addNotification(product.product_title)
+
+        localStorage.setItem(name, JSON.stringify(cart));
+    }
+
     $(document).ready(function () {
         let $menu = $('.list-cat_drop');
         let $toggleBtn = $('.list-cat__main_icon');

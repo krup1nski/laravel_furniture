@@ -209,9 +209,16 @@
     <script>
         $(document).ready(function (){
 
-            $('.mini-product__like').on('click', function (){
-                $(this).addClass('active')
+            // Для всех товаров в корзине добавляем класс active
+            let wishlist = JSON.parse(localStorage.getItem('wishlist'))
+            $('.mini-product').each(function (){
+                let id = $(this).find('input[name="product_id"]').val()
+                if(wishlist && wishlist.filter(item => item.product_id == id).length){
+                    $(this).find('.mini-product__like').addClass('active')
+                }
             })
+
+
 
             // при выборе варианта сортировки добавляем его в форму
             $('select[name="order_by"]').on('change', function (){
@@ -234,70 +241,24 @@
 
             //добавление товара в локалсторэдж
             $('.mini-product__buy').on('click', function () {
+                window.addMiniProductToStorage('cart', $(this))
+            });
+            $('.mini-product__like').on('click', function (){
 
                 let id = $(this).parents('.mini-product').find('input[name="product_id"]').val();
-                let title = $(this).parents('.mini-product').find('.mini-product__title').text().trim();
-                let price = $(this).parents('.mini-product').find('.mini-product__price_current').text().trim().replace(' BYN', '');
-                let img_path = $(this).parents('.mini-product').find('.mini-product__img img').attr('src');
-                let product_hash = $(this).parents('.mini-product').find('input[name="product_hash"]').val();
+                let wishlist = JSON.parse(localStorage.getItem('wishlist'))
 
-
-                let product = {
-                    id: id,
-                    product_id: id,
-                    product_title: title,
-                    count: 1,
-                    product_price: price,
-                    product_img: img_path,
-                    product_hash: product_hash,
-                    product_options: [],
-                    accessories: [],
-                };
-
-                let cart = JSON.parse(localStorage.getItem('cart')) || [];
-                let match = false;
-
-                cart.forEach(item => {
-                    if (item.product_id == product.product_id) {
-                        item.count += 1; // Увеличиваем количество, если товар уже есть в корзине
-                        match = true;
-                    }
-                });
-
-                if (!match) {
-                    cart.push(product); // Добавляем новый товар, если его еще нет
+                // Если есть товар в корзине
+                if(wishlist && wishlist.filter(item => item.product_id == id).length){
+                    wishlist = wishlist.filter(item => item.id != id);
+                    localStorage.setItem('wishlist', JSON.stringify(wishlist));
+                    $(this).removeClass('active')
+                }else{//Если нет товара в wishlist - добавляем
+                    $(this).addClass('active')
+                    window.addMiniProductToStorage('wishlist', $(this))
                 }
-                $('.ml-action_cart__count').text(cart.length)
 
-
-                let time = Date.now()
-                let notification = `
-                <div class="notifications__item hide" data-id="${time}">
-                    <div class="notifications__item_close">
-                        <i class="fa-solid fa-xmark"></i>
-                    </div>
-                    <div class="notifications__item_icon">
-                        <i class="fa-solid fa-check"></i>
-                    </div>
-                    <div class="notifications__item_info">
-                        <span class="notifications__item_text"><strong>${title}</strong> добавлен в корзину</span>
-                        <a href="{{ route('cart') }}" class="notifications__item_link">Открыть корзину</a>
-                    </div>
-                </div>`
-                $('.notifications').append(notification)
-                setTimeout(function () {
-                    $('.notifications__item[data-id="'+ time +'"]').removeClass('hide')
-                }, 10)
-
-                setTimeout(function (){
-                    $('.notifications__item[data-id="'+ time +'"]').addClass('hide')
-                    setTimeout(function (){
-                        $('.notifications__item[data-id="'+ time +'"]').remove()
-                    }, 250)
-                }, 5000)
-
-                localStorage.setItem('cart', JSON.stringify(cart));
-            });
+            })
         })
     </script>
 @endsection
