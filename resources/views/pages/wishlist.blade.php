@@ -26,7 +26,7 @@
             </div>
 
             <div class="page-likes__items">
-{{--                Здесь товары из wishlist из LocalStorage     --}}
+                <!-- Здесь товары из wishlist из LocalStorage -->
             </div>
         </div>
     </div>
@@ -35,99 +35,88 @@
 
 @section('scripts')
     <script>
-        $(document).ready(function (){
-            let output = ``
-            let wishlist = JSON.parse(localStorage.getItem('wishlist'))
-            wishlist.forEach(item => {
-                output +=  `
-                <div class="mini-product">
-                    <input type="hidden" name="product_id" value="${ item.id }">
-                    <input type="hidden" name="product_hash" value="${ item.product_hash }">
-                    <div class="mini-product__top">
-{{--                        <div class="mini-product__stock">--}}
-{{--                            @if(!empty($product->quantity))--}}
-{{--                {{ $product->quantity }} шт.--}}
-{{--                            @else--}}
-{{--                Нет в наличии--}}
-{{--@endif--}}
-{{--                </div>--}}
-                <div class="mini-product__action">
-                    <div class="mini-product__compare">
-                        <i class="fa-solid fa-equals"></i>
-                    </div>
-                    <div class="mini-product__like">
-                        <i class="fa-solid fa-heart"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="mini-product__img">
-                <img src="${ item.product_img }" alt="">
-                    </div>
+        $(document).ready(function(){
+            let output = ``;
+            let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
 
-                <a href="/product/${item.product_hash}" class="mini-product__title">${ item.product_title }</a>
-
-
-                <div class="mini-product__rating">
-                    <div class="mini-product__rating_icon">
-                        <i class="fa-solid fa-star"></i>
-                    </div>
-                    <span class="mini-product__rating_text">4.7</span>
-                </div>
-                <div class="mini-product__price">
-
-
-                        <div class="mini-product__price_main">
-                            <span class="mini-product__price_old">${ item.product_price } BYN</span>
-                                <span class="mini-product__price_current">${ item.product_price-(item.product_price*item.product_sale/100) } BYN</span>
+            if(wishlist.length === 0) {
+                output = `<div class="empty-wishlist">В избранном пока нет товаров</div>`;
+            } else {
+                wishlist.forEach(item => {
+                    let price = ``;
+                    if(item.product_sale) {
+                        price = `
+                            <div class="mini-product__price_main">
+                                <span class="mini-product__price_old">${item.product_price} BYN</span>
+                                <span class="mini-product__price_current">${(item.product_price - (item.product_price * item.product_sale / 100)).toFixed(2)} BYN</span>
                             </div>
                             <div class="mini-product__price_sale">
-                                <div class="mini-product__price_sale-count">-${ item.product_sale }%</div>
+                                <div class="mini-product__price_sale-count">-${item.product_sale}%</div>
                             </div>
+                        `;
+                    } else {
+                        price = `
+                            <div class="mini-product__price_main">
+                                <span class="mini-product__price_current">${item.product_price} BYN</span>
+                            </div>
+                        `;
+                    }
 
+                    output += `
+                    <div class="mini-product">
+                        <input type="hidden" name="product_id" value="${item.id}">
+                        <input type="hidden" name="product_hash" value="${item.product_hash}">
+                        <div class="mini-product__top">
+                            <div class="mini-product__stock">
+                                ${item.quantity ? item.quantity + ' шт.' : 'Нет в наличии'}
+                            </div>
+                            <div class="mini-product__action">
+                                <div class="mini-product__compare">
+                                    <i class="fa-solid fa-equals"></i>
+                                </div>
+                                <div class="mini-product__like active">
+                                    <i class="fa-solid fa-heart"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mini-product__img">
+                            <img src="${item.product_img}" alt="${item.product_title}">
+                        </div>
+                        <a href="/product/${item.product_hash}" class="mini-product__title">${item.product_title}</a>
+                        <div class="mini-product__rating">
+                            <div class="mini-product__rating_icon">
+                                <i class="fa-solid fa-star"></i>
+                            </div>
+                            <span class="mini-product__rating_text">4.7</span>
+                        </div>
+                        <div class="mini-product__price">
+                            ${price}
+                        </div>
 
                     </div>
-{{--                    @if(!empty($product->quantity))--}}
-{{--                <div class="mini-product__buy">--}}
-{{--                    <i class="fa-solid fa-cart-shopping"></i>--}}
-{{--                </div>--}}
-{{--@else--}}
-{{--                <div class="mini-product__not-buy">--}}
-{{--                    <i class="fa-solid fa-cart-shopping"></i>--}}
-{{--                </div>--}}
-{{--@endif--}}
+                    `;
+                });
+            }
 
-                </div>
-                `
-            })
-            $('.page-likes__items').html(output)
+            $('.page-likes__items').html(output);
 
-            let cart = JSON.parse(localStorage.getItem('cart')) || []
-            let compare = JSON.parse(localStorage.getItem('compare')) || []
+            // Инициализация обработчиков событий
+            window.addClassElsMiniProduct && window.addClassElsMiniProduct();
 
-// Для всех товаров в корзине добавляем класс active
-            $('.mini-product').each(function (){
-                let id = $(this).find('input[name="product_id"]').val()
-                if(wishlist && wishlist.filter(item => item.product_id == id).length){
-                    $(this).find('.mini-product__like').addClass('active')
-                }
-                if(cart && cart.filter(item => item.product_id == id).length){
-                    $(this).find('.mini-product__buy').addClass('active')
-                }
-                if(compare && compare.filter(item => item.product_id == id).length){
-                    $(this).find('.mini-product__compare').addClass('active')
-                }
-            })
 
-            $('.mini-product__buy').on('click', function (){
-                window.miniProductBuyHandler($(this))
-            })
+            $('.mini-product__like').on('click', function(){
+                window.miniProductLikeHandler && window.miniProductLikeHandler($(this));
+            });
 
-            $('.mini-product__like').on('click', function (){
-                window.miniProductLikeHandler($(this))
-            })
+            $('.mini-product__compare').on('click', function(){
+                window.miniProductCompareHandler && window.miniProductCompareHandler($(this));
+            });
 
-        })
+            $('.likes-clear').on('click', function(e) {
+                e.preventDefault();
+                localStorage.removeItem('wishlist');
+                $('.page-likes__items').html('<div class="empty-wishlist">В избранном пока нет товаров</div>');
+            });
+        });
     </script>
-
 @endsection
-

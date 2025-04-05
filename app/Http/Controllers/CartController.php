@@ -9,6 +9,7 @@ use App\Models\OrderProduct;
 use App\Models\OrderProductAccessory;
 use App\Models\OrderProductOption;
 use App\Models\Product;
+use App\Models\PromoCode;
 use Illuminate\Http\Request;
 
 class CartController extends MainController
@@ -80,6 +81,16 @@ class CartController extends MainController
             'order_id' => $order_id
         ]);
 
+    }
+
+    public function promoCode(Request $request){
+        $promo = PromoCode::where('code', $request->post('code'))->first();
+        if(!empty($promo)){
+            return ['ok', $promo->discount];
+        }else{
+            return ['error'];
+        }
+        return $request;
     }
 
 }

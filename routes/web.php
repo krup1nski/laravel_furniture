@@ -18,5 +18,7 @@ Route::get('/accessories', [AccessoriesController::class, 'index'])->name('acces
 Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist');
 
 Route::post('/cart/order', [CartController::class, 'order'])->name('cart-order');
+Route::post('/cart/promo-code', [CartController::class, 'promoCode'])->name('promo-code');
+
 
 

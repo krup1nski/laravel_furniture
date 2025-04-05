@@ -117,6 +117,7 @@
                         <input type="hidden" name="product_id" value="{{ $product->id }}">
                         <input type="hidden" name="product_title" value="{{ $product->title }}">
                         <input type="hidden" name="product_price" value="{{ $product->price }}">
+                        <input type="hidden" name="product_sale" value="{{ $product->sale }}">
                         <input type="hidden" name="product_img" value="{{ $product->image_path }}">
                         <input type="hidden" name="product_hash" value="{{ $product->hash }}">
                         <input type="hidden" name="with_options" value="{{ $product->options->isNotEmpty() ? 1 : 0 }}">
@@ -262,6 +263,7 @@
                 let id = $('input[name="product_id"]').val();
                 let title = $('input[name="product_title"]').val();
                 let price = $('input[name="product_price"]').val();
+                let sale = $('input[name="product_sale"]').val();
                 let img_path = $('input[name="product_img"]').val();
                 let count = $('input[name="count"]').val();
                 let product_hash = $('input[name="product_hash"]').val();
@@ -297,6 +299,7 @@
                     product_title: title,
                     count: Number(count),
                     product_price: price,
+                    product_sale: sale,
                     product_img: img_path,
                     product_hash: product_hash,
                     product_options: options,

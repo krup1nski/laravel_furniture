@@ -82,12 +82,19 @@
         </div>
         <div class="ml-action flex-center">
             <div class="ml-action_compare">
-                <i class="fa-solid fa-equals"></i>
+                <div class="ml-action_cart_icon">
+                    <span class="ml-action_cart__count">0</span>
+                    <i class="fa-solid fa-equals"></i>
+                </div>
             </div>
             <div class="ml-action_like">
-                <a href="{{ route('wishlist') }}">
-                    <i class="fa-solid fa-heart"></i>
-                </a>
+                <div class="ml-action_like_icon">
+                    <span class="ml-action__like_count">0</span>
+                    <a href="{{ route('wishlist') }}">
+                        <i class="fa-solid fa-heart"></i>
+                    </a>
+                </div>
+
             </div>
             <div class="ml-action_cart">
                 <span class="ml-action_cart__count">0</span>
@@ -245,6 +252,7 @@
                 result = [...wishlist, product]
             }
         }
+        $('.ml-action__like_count').text(result.length)
         localStorage.setItem('wishlist', JSON.stringify(result));
     }
 
@@ -315,6 +323,26 @@
         window.toggleToLike(product)
     }
 
+    window.addClassElsMiniProduct = () => {
+        let cart = JSON.parse(localStorage.getItem('cart')) || []
+        let wishlist = JSON.parse(localStorage.getItem('wishlist')) || []
+        let compare = JSON.parse(localStorage.getItem('compare')) || []
+
+// Для всех товаров в корзине добавляем класс active
+        $('.mini-product').each(function (){
+            let id = $(this).find('input[name="product_id"]').val()
+            if(wishlist && wishlist.filter(item => item.product_id == id).length){
+                $(this).find('.mini-product__like').addClass('active')
+            }
+            if(cart && cart.filter(item => item.product_id == id).length){
+                $(this).find('.mini-product__buy').addClass('active')
+            }
+            if(compare && compare.filter(item => item.product_id == id).length){
+                $(this).find('.mini-product__compare').addClass('active')
+            }
+        })
+    }
+
     //выпадающий список категорий
     $(document).ready(function () {
         let $menu = $('.list-cat_drop');
@@ -341,6 +369,9 @@
         // Устанавливаем количество товаров в корзине
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
         $('.ml-action_cart__count').text(cart.length);
+
+        let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+        $('.ml-action__like_count').text(wishlist.length);
     });
 
 </script>

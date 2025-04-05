@@ -32,6 +32,8 @@
         <form action="{{ route('cart-order') }}" method="POST" class="form-order">
             @csrf
             <input type="hidden" name="cart" value="">
+            <input type="hidden" name="promo_code" value="">
+            <input type="hidden" name="promo_code_sale" value="">
 
             <div class="container">
                 <div class="page-cart-main">
@@ -76,10 +78,11 @@
                 </div>
                 <div class="pcart-main-order">
                     <div class="pcart-main-order-promo">
-                        <input type="text" name="promocode" class="pcart-main-order-promo__input"
+                        <input type="text" name="code" class="pcart-main-order-promo__input"
                                placeholder="Промокод">
                         <button class="pcart-main-order-promo__btn">Применить</button>
                     </div>
+                    <span class="pcart-main-order-promo__text"></span>
                     <span class="pcart-main-order__title">Ваш заказ</span>
 
                     <div class="pcart-main-order__info">
@@ -116,12 +119,48 @@
     <script>
         $(document).ready(function (){
 
+            //promo code
+            $('.pcart-main-order-promo__btn').on('click',function (e){
+                e.preventDefault()
+
+                let code = $('input.pcart-main-order-promo__input[name="code"]').val()
+
+                $.ajax({
+                    url: "{{ route('promo-code') }}",
+                    type: "POST",
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        code
+                    },
+                    success: function (response){
+                        if(response[0] == 'error'){
+                            $('.pcart-main-order-promo__text').text('Промокод недейстрителен')
+                        }else{
+                            $('.input[name="promo_code"]').val(code)
+                            $('.input[name="promo_code_sale"]').val(response[1])
+                            $('.pcart-main-order-promo__text').text('Ваша скидка ' + response[1] + '%')
+                            let current_price = $('.result-product-itog .pcart-main-order__info-item_val .num').text()
+                            $('.result-product-itog .pcart-main-order__info-item_val .num').text(current_price - (current_price * response[1] / 100).toFixed(0))
+                        }
+                    }
+                })
+            })
+
             let calculate_result_sum = function (cart){
+                let sale = $('.input[name="promo_code_sale"]').val()
                 if(cart != null){
                     let result = 0;
                     cart.forEach(item => {
-                        result += item.product_price * item.count;
+                        if(item.product_sale){
+                            result += (item.product_price - (item.product_price * item.product_sale / 100)).toFixed(0) * item.count;
+                        }else{
+                            result += item.product_price * item.count;
+                        }
+
                     })
+                    if(sale){
+                        result = (result - (result * sale / 100)).toFixed(0) * item.count;
+                    }
                     return result;
                 }
             }
@@ -158,11 +197,30 @@
 
                 }
 
+                let price = ``;
+
+                if(item.product_sale) {
+                    price = `
+                            <div class="page-cart-product__price_main">
+                                <span class="page-cart-product__price_old">${item.product_price} BYN</span>
+                                <div class="page-cart-product__price_sale-count">-${item.product_sale}%</div>
+                            </div>
+                            <span class="page-cart-product__price_current"><span class="price">${(item.product_price - (item.product_price * item.product_sale / 100)).toFixed(0)}</span> BYN</span>
+                        `;
+                } else {
+                    price = `
+                            <div class="page-cart-product__price_main">
+                                <span class="page-cart-product__price_current"><span class="price">${item.product_price}</span> BYN</span>
+                            </div>
+                        `;
+                }
+
                 output += `
                 <div class="page-cart-product-list-item">
                     <div class="page-cart-product-list-item__info_wrap">
                     <input type="hidden" name="product_id" value="${item.product_id}" >
                     <input type="hidden" name="id" value="${item.id}" >
+                    <input type="hidden" name="price_result" value="${(item.product_price - (item.product_price * item.product_sale / 100)).toFixed(0)}" >
                         <div class="page-cart-product-list-item__img">
                             <img src="${item.product_img}" alt="">
                         </div>
@@ -178,7 +236,7 @@
                             <span class="page-cart-product-list-item__count_plus">+</span>
                     </div>
                     <div class="page-cart-product-list-item__price">
-                        ${item.product_price} byn
+                        ${price}
                     </div>
                     <div class="page-cart-product-list-item__remove">
                         <i class="fa-solid fa-xmark"></i>

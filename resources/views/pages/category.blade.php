@@ -215,26 +215,7 @@
     <script>
         $(document).ready(function (){
 
-
-            let cart = JSON.parse(localStorage.getItem('cart')) || []
-            let wishlist = JSON.parse(localStorage.getItem('wishlist')) || []
-            let compare = JSON.parse(localStorage.getItem('compare')) || []
-
-// Для всех товаров в корзине добавляем класс active
-            $('.mini-product').each(function (){
-                let id = $(this).find('input[name="product_id"]').val()
-                if(wishlist && wishlist.filter(item => item.product_id == id).length){
-                    $(this).find('.mini-product__like').addClass('active')
-                }
-                if(cart && cart.filter(item => item.product_id == id).length){
-                    $(this).find('.mini-product__buy').addClass('active')
-                }
-                if(compare && compare.filter(item => item.product_id == id).length){
-                    $(this).find('.mini-product__compare').addClass('active')
-                }
-            })
-
-
+            window.addClassElsMiniProduct()
 
             // при выборе варианта сортировки добавляем его в форму
             $('select[name="order_by"]').on('change', function (){

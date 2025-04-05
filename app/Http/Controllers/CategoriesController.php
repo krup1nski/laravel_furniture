@@ -104,7 +104,7 @@ class CategoriesController extends MainController
             ->get()
             ->groupBy('group.title');
 
-        $data['products'] = $products->paginate(12)->withQueryString();
+        $data['products'] = $products->paginate(4)->withQueryString();
         $data['filters'] = $filters;
 
 //        dd($this->data['bradcrumbs']);
