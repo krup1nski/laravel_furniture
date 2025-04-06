@@ -67,14 +67,14 @@
         <a class="ml-logo" href="/">
             <img src="{{ asset('images\logo.png') }}" alt="">
         </a>
-        <form class="fast-search">
+        <form action="{{ route('search') }}" class="fast-search">
             <div class="fast-search__input">
                 <input type="text" name="search" placeholder="Поиск товара">
                 <div class="fast-search__icon">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </div>
             </div>
-            <span class="fast-search__example">Например</span>
+            <span class="fast-search__example">Например: Комод</span>
         </form>
         <div class="ml-callback">
             <a href="tel:+375441234567" class="ml-callback__phone">+375(44)12-34-567</a>

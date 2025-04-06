@@ -1629,3 +1629,49 @@ body{
     display: block;
 }
 
+
+
+/*---------search----------*/
+.page-search{
+    padding-bottom: 80px;
+}
+.search-box{
+    display: flex;
+    margin-bottom: 30px;
+}
+.search-box input{
+    height: 60px;
+    border: 1px solid var(--gray);
+    border-color: var(--gray);
+    width: 100%;
+    border-radius: 5px solid var(--gray);
+    padding: 0 20px;
+}
+.search-box__input{
+    width: 60%;
+}
+.search-box__btn{
+    background-color: var(--accent);
+    height: 60px;
+    padding: 0 35px;
+    color: #fff;
+    border: none;
+    outline: none;
+    margin-left: 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.search-box__input_dop{
+    font-size: 14px;
+    color: var(--gray-d);
+}
+.page-search__results-title{
+    font-size: 20px;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 30px;
+}
+.page-search__results{
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+}
